@@ -22,36 +22,77 @@ public class BeatClass extends JFrame implements ActionListener {
         this.repaint();
     }
     JLabel bgLabel;
-    JLabel bgList;
+    JLabel bgLabel2;
+    JButton bgList;
+    JButton leftList;
+    JButton rightList;
     JLabel logoLabel;
+    JPanel contentPanel;
+    CardLayout cardLayout;
     public  BeatClass(){
-        setTitle("My Game");
-        setSize(900, 600);  // ȭ�� ũ�� ����
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("Image Scaling Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("My Game");
+        frame.setSize(900, 600);  // ȭ�� ũ�� ����
+        frame.setLocationRelativeTo(null);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setSize(900,600);
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        cardLayout = new CardLayout();
+        contentPanel = new JPanel();
+        contentPanel.setLayout(cardLayout);
+        frame.add(contentPanel);
         introBackground = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
         // ��� �̹��� �߰�
         bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
-        add(bgLabel);
-
+        bgLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        bgLabel2 = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
+        bgLabel2.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         // ��� �̹��� ũ�� ����
         bgLabel.setBounds(0, 0, getWidth(), getHeight());
-
-
+        bgLabel2.setBounds(0, 0, getWidth(), getHeight());
         Image logoImage = new ImageIcon(getClass().getResource("../images/logoImage.png")).getImage();
         logoLabel = new JLabel(new ImageIcon(logoImage.getScaledInstance(300, 150, Image.SCALE_SMOOTH)));
         logoLabel.setBounds(300, 50, 300, 150);
-        bgLabel.add(logoLabel);
-
-
-        bgList = new JLabel(new ImageIcon(getClass().getResource("../images/introBackground.jpg")));
+        //bgLabel.add(logoLabel);
+        logoLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        //panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
+        contentPanel.add(panel,"selectWindows");
+        //mainPanel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
+        contentPanel.add(mainPanel,"mainWindows");
         //add(bgList);
+        mainPanel.add(bgLabel);
+
 
 
         //bgList.setVisible(false);
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        Image centerImage = new ImageIcon(getClass().getResource("../images/꼬부기.png")).getImage();
+        bgList = new JButton(new ImageIcon(centerImage.getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
 
+        bgList.setBorder(BorderFactory.createLineBorder(Color.RED));
+        bgList.setBounds(300, 150, 300, 300);
+        // JLabel 추가
+        panel.add(bgLabel2);
+        bgLabel2.add(bgList);
+        bgLabel.add(logoLabel);
 
-
+        //cardLayout.next(contentPanel);
+        //cardLayout.show(contentPanel,"mainWindows");
+        Image leftImage = new ImageIcon(getClass().getResource("../images/꼬부기.png")).getImage();
+        leftList = new JButton(new ImageIcon(leftImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+        leftList.setVerticalAlignment(JLabel.CENTER);
+        leftList.setHorizontalAlignment(JLabel.CENTER);
+       leftList.setBounds(50,270,150,150);
+        // JLabel 추가
+        bgLabel2.add(leftList);
+        Image rightImage = new ImageIcon(getClass().getResource("../images/꼬부기.png")).getImage();
+        rightList = new JButton(new ImageIcon(rightImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+        rightList.setVerticalAlignment(JLabel.CENTER);
+        rightList.setHorizontalAlignment(JLabel.CENTER);
+        rightList.setBounds(700,270,150,150);
+        // JLabel 추가
+        bgLabel2.add(rightList);
         // ���� ���� ��ư �߰�
 
         Image startImage = new ImageIcon(getClass().getResource("../images/startButtonImage.png")).getImage();
@@ -61,7 +102,7 @@ public class BeatClass extends JFrame implements ActionListener {
         startButton.setBorder(BorderFactory.createEmptyBorder());
         startButton.setBounds(375, 200, 150, 40); // startButton�� ��ġ�� ũ�� ����
         startButton.setContentAreaFilled(false);
-       bgLabel.add(startButton);
+        bgLabel.add(startButton);
 
         startButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -103,7 +144,7 @@ public class BeatClass extends JFrame implements ActionListener {
         rankButton.setBounds(400, 370, 100, 30);
         quitButton.setBounds(400, 490, 100, 30);
 
-        setVisible(true);
+        frame.setVisible(true);
 
         Music introMusic = new Music("mus1.mp3",true);
         introMusic.start();
