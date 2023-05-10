@@ -35,10 +35,16 @@ public class BeatClass extends JFrame implements ActionListener {
     CardLayout cardLayout;
     JPanel gamePanel;
     JLabel gameLabel;
+    JLabel gifBackGround;
     ArrayList<SoundPack> MusicList = new ArrayList<SoundPack>();
     int selNum;
     int endNum;
     int startNum;
+    private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
+        Image image = icon.getImage();
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
+    }
     public  BeatClass(){
         game.bc=this;
         MusicList.add(new SoundPack("Avicii - Levels.mp3","s_Levels.jpg"));
@@ -67,14 +73,26 @@ public class BeatClass extends JFrame implements ActionListener {
         introBackground = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
         // ��� �̹��� �߰�
         Image tm = LoadImage("GameBackGround1.jpg").getImage().getScaledInstance(900, 600, Image.SCALE_SMOOTH);
+        //Image tm= Toolkit.getDefaultToolkit().createImage("../image/sibe.gif");
         ImageIcon im = new ImageIcon();
         im.setImage(tm);
-        gameLabel=new JLabel(im);
+
+        gifBackGround=new JLabel();
+
+        ImageIcon sd =new ImageIcon(this.getClass().getResource("../images/v1.gif"));
+
+        gifBackGround.setIcon(sd);
+        ImageIcon icon = new ImageIcon("../images/MainWallpaper.png");
+
+
+        gameLabel=new JLabel();
+        gameLabel.setIcon(im);
         bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
         bgLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         bgLabel2 = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
         bgLabel2.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         // ��� �̹��� ũ�� ����
+        gifBackGround.setBounds(0,0,getWidth(),getHeight());
         gameLabel.setBounds(0,0,getWidth(),getHeight());
         bgLabel.setBounds(0, 0, getWidth(), getHeight());
         bgLabel2.setBounds(0, 0, getWidth(), getHeight());
@@ -90,8 +108,8 @@ public class BeatClass extends JFrame implements ActionListener {
         contentPanel.add(gamePanel,"gameWindows");
         //add(bgList);
         mainPanel.add(bgLabel);
-
-        gamePanel.add(gameLabel);
+        gamePanel.add(gifBackGround);
+        //gamePanel.add(gameLabel);
 
         //bgList.setVisible(false);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
