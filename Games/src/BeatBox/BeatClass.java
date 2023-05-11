@@ -24,7 +24,7 @@ public class BeatClass extends JFrame implements ActionListener {
         e.drawImage(introBackground,0,0,null);
         this.repaint();
     }
-    public static Game game =new Game();
+    public static Game game;
     JLabel bgLabel;
     JLabel bgLabel2;
     JButton bgList;
@@ -36,21 +36,31 @@ public class BeatClass extends JFrame implements ActionListener {
     JPanel gamePanel;
     JLabel gameLabel;
     JLabel gifBackGround;
+    public ArrayList<JLabel> effect=new ArrayList<JLabel>();
+    ArrayList<JLabel> effectPanel=new ArrayList<JLabel>();
+    ArrayList<JLabel> safePanel=new ArrayList<JLabel>();
+    JLabel gamePanel2;
+    JLabel gamePanel3;
+    JLabel gamePanel4;
+    JLabel gamePanel5;
+    JLabel gamePanel6;
     ArrayList<SoundPack> MusicList = new ArrayList<SoundPack>();
     int selNum;
     int endNum;
     int startNum;
+    JPanel mainPanel;
+
+    Music introMusic;
     private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage();
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
     public  BeatClass(){
-        game.bc=this;
         MusicList.add(new SoundPack("Avicii - Levels.mp3","s_Levels.jpg"));
         MusicList.add(new SoundPack("Avicii - The Nights.mp3","s_TheNights.jpg"));
         MusicList.add(new SoundPack("David Guetta - Without You.mp3","s_Without You.jpg"));
-        MusicList.add(new SoundPack("瑜댁꽭�씪�븣 - Unforgiven.mp3","s_Unforgiven.jpg"));
+        MusicList.add(new SoundPack("르세라핌 - Unforgiven.mp3","s_Unforgiven.jpg"));
         selNum=MusicList.size()/2;
         endNum = MusicList.size()-1;
         startNum=0;
@@ -61,8 +71,9 @@ public class BeatClass extends JFrame implements ActionListener {
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setSize(900,600);
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout());
         gamePanel = new JPanel(new BorderLayout());
+        gamePanel.setSize(900,600);;
         frame.addKeyListener(new KeyListener());
         frame.setFocusable(true);
         frame.requestFocus();
@@ -87,6 +98,20 @@ public class BeatClass extends JFrame implements ActionListener {
 
         gameLabel=new JLabel();
         gameLabel.setIcon(im);
+        for(int i = 0;i<6;i++){
+            Image lo = new ImageIcon(getClass().getResource("../images/effectPanel.png")).getImage();
+            effectPanel.add(new JLabel(new ImageIcon(lo.getScaledInstance(100,500,Image.SCALE_SMOOTH))));
+            effectPanel.get(i).setBounds(230+(i*99),0,100,500);
+            safePanel.add(new JLabel(new ImageIcon(lo.getScaledInstance(100,40,Image.SCALE_SMOOTH))));
+            safePanel.get(i).setBounds(0,410,100,40);
+            safePanel.get(i).setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            Image lo2 = new ImageIcon(getClass().getResource("../images/effect.png")).getImage();
+            effect.add(new JLabel(new ImageIcon(lo2.getScaledInstance(100,500,Image.SCALE_SMOOTH))));
+            effect.get(i).setBounds(0,0,100,500);
+            //effect.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
+        }
+
+        
         bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
         bgLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         bgLabel2 = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
@@ -110,10 +135,17 @@ public class BeatClass extends JFrame implements ActionListener {
         mainPanel.add(bgLabel);
         gamePanel.add(gifBackGround);
         //gamePanel.add(gameLabel);
-
+        for(int i =0;i<effectPanel.size();i++){
+             gifBackGround.add(effectPanel.get(i));
+             effectPanel.get(i).add(safePanel.get(i));
+             effectPanel.get(i).add(effect.get(i));
+             effect.get(i).setVisible(false);
+            System.out.println(effectPanel.get(i).getBounds());
+        }
+        //gamePanel.add(logoLabel);
         //bgList.setVisible(false);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        Image centerImage =LoadImage(MusicList.get(0).image).getImage();
+        Image centerImage =LoadImage(MusicList.get(selNum).image).getImage();
         bgList = new JButton(new ImageIcon(centerImage.getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
         bgList.addActionListener(this);
         //bgList.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -125,7 +157,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
         //cardLayout.next(contentPanel);
         cardLayout.show(contentPanel,"mainWindows");
-        Image leftImage = LoadImage(MusicList.get(1).image).getImage();
+        Image leftImage = LoadImage(MusicList.get(selNum-1).image).getImage();
         leftList = new JButton(new ImageIcon(leftImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
         leftList.setVerticalAlignment(JLabel.CENTER);
         leftList.addActionListener(this);
@@ -133,7 +165,7 @@ public class BeatClass extends JFrame implements ActionListener {
        leftList.setBounds(50,270,150,150);
         // JLabel 
         bgLabel2.add(leftList);
-        Image rightImage = LoadImage(MusicList.get(2).image).getImage();
+        Image rightImage = LoadImage(MusicList.get(selNum+1).image).getImage();
         rightList = new JButton(new ImageIcon(rightImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
         rightList.setVerticalAlignment(JLabel.CENTER);
         rightList.addActionListener(this);
@@ -283,7 +315,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
         frame.setVisible(true);
 
-        Music introMusic = new Music("mus1.mp3",true);
+        introMusic = new Music("mus1.mp3",true);
         introMusic.start();
     }
     public ImageIcon LoadImage(String name){
@@ -337,13 +369,10 @@ public class BeatClass extends JFrame implements ActionListener {
         bgList.setIcon(icon3);
 
     }
-    public void IfNumCheck(int d){
-        if(d==1){
-
-        }else if(d==0){
-
-        }
-        return;
+    public void GameStart(String tn, String di, String mn){
+        game = new Game(tn,di,mn);
+        game.bc=this;
+        System.out.println(tn+"/"+mn);
     }
     public void actionPerformed(ActionEvent e) {
        
@@ -365,7 +394,11 @@ public class BeatClass extends JFrame implements ActionListener {
             SelectWindowsImageSetting(selNum-1,selNum,selNum+1);
         }else if(e.getSource()==bgList){
             cardLayout.show(contentPanel,"gameWindows");
-            System.out.println("FFFF");
+            GameStart(MusicList.get(selNum).name.split("\\.")[0],"T",MusicList.get(selNum).name);
+            introMusic.close();
         }
     }
+
+
+
 }
