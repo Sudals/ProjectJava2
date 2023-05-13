@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="JAR1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Games/out/production/Games/JAR/jlayer-1.0.1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Games/out/production/Games/JAR/junit-3.8.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

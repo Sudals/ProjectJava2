@@ -51,6 +51,14 @@ public class BeatClass extends JFrame implements ActionListener {
     JPanel mainPanel;
 
     Music introMusic;
+
+    ArrayList<Note> noteList1 = new ArrayList<Note>();
+    ArrayList<Note> noteList2 = new ArrayList<Note>();
+    ArrayList<Note> noteList3 = new ArrayList<Note>();
+    ArrayList<Note> noteList4 = new ArrayList<Note>();
+    ArrayList<Note> noteList5 = new ArrayList<Note>();
+    ArrayList<Note> noteList6 = new ArrayList<Note>();
+
     private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage();
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -125,7 +133,7 @@ public class BeatClass extends JFrame implements ActionListener {
         logoLabel = new JLabel(new ImageIcon(logoImage.getScaledInstance(300, 150, Image.SCALE_SMOOTH)));
         logoLabel.setBounds(300, 50, 300, 150);
         //bgLabel.add(logoLabel);
-        logoLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        //logoLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         //panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
         contentPanel.add(panel,"selectWindows");
         //mainPanel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
@@ -369,6 +377,42 @@ public class BeatClass extends JFrame implements ActionListener {
         bgList.setIcon(icon3);
 
     }
+    public void slot1(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList1.add(note);
+        effectPanel.get(0).add(note.note);
+    }
+    public void slot2(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList2.add(note);
+        effectPanel.get(1).add(note.note);
+    }public void slot3(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList3.add(note);
+        effectPanel.get(2).add(note.note);
+    }
+    public void slot4(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList4.add(note);
+        effectPanel.get(3).add(note.note);
+    }
+    public void slot5(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList5.add(note);
+        effectPanel.get(4).add(note.note);
+    }
+    public void slot6(){
+        Note note = (new Note(1,0,0,1,0));
+        note.start();
+        noteList6.add(note);
+        effectPanel.get(5).add(note.note);
+    }
+
     public void GameStart(String tn, String di, String mn){
         game = new Game(tn,di,mn);
         game.bc=this;
@@ -396,6 +440,11 @@ public class BeatClass extends JFrame implements ActionListener {
             cardLayout.show(contentPanel,"gameWindows");
             GameStart(MusicList.get(selNum).name.split("\\.")[0],"T",MusicList.get(selNum).name);
             introMusic.close();
+            slot1();
+            slot2();
+            slot3();
+            slot4();
+
         }
     }
 
