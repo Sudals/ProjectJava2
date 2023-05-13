@@ -1,6 +1,11 @@
 package BeatBox;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +14,9 @@ import java.util.ArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
 
-    JButton startButton, settingButton, rankButton, quitButton;
+
+
+    JButton logoButton, startButton, settingButton, rankButton, quitButton;
     private Image screenImage;
     private Graphics screenGraphic;
 
@@ -64,11 +71,28 @@ public class BeatClass extends JFrame implements ActionListener {
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
+
+    public class SoundPlayer {
+        public static void playSound(String filePath) {
+            try {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(BeatBox.SoundPlayer.class.getResource(filePath));
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+
     public  BeatClass(){
+
+
         MusicList.add(new SoundPack("Avicii - Levels.mp3","s_Levels.jpg"));
         MusicList.add(new SoundPack("Avicii - The Nights.mp3","s_TheNights.jpg"));
         MusicList.add(new SoundPack("David Guetta - Without You.mp3","s_Without You.jpg"));
-        MusicList.add(new SoundPack("르세라핌 - Unforgiven.mp3","s_Unforgiven.jpg"));
+        MusicList.add(new SoundPack("瑜댁꽭�씪�븣 - Unforgiven.mp3","s_Unforgiven.jpg"));
         selNum=MusicList.size()/2;
         endNum = MusicList.size()-1;
         startNum=0;
@@ -102,6 +126,8 @@ public class BeatClass extends JFrame implements ActionListener {
 
         gifBackGround.setIcon(sd);
         ImageIcon icon = new ImageIcon("../images/MainWallpaper.png");
+        
+        
 
 
         gameLabel=new JLabel();
@@ -118,6 +144,8 @@ public class BeatClass extends JFrame implements ActionListener {
             effect.get(i).setBounds(0,0,100,500);
             //effect.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
         }
+        
+        
 
         
         bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
@@ -129,6 +157,7 @@ public class BeatClass extends JFrame implements ActionListener {
         gameLabel.setBounds(0,0,getWidth(),getHeight());
         bgLabel.setBounds(0, 0, getWidth(), getHeight());
         bgLabel2.setBounds(0, 0, getWidth(), getHeight());
+       
         Image logoImage = new ImageIcon(getClass().getResource("../images/logoImage.png")).getImage();
         logoLabel = new JLabel(new ImageIcon(logoImage.getScaledInstance(300, 150, Image.SCALE_SMOOTH)));
         logoLabel.setBounds(300, 50, 300, 150);
@@ -183,18 +212,36 @@ public class BeatClass extends JFrame implements ActionListener {
         bgLabel2.add(rightList);
         // 
 
+        
+        
+
+        Image teamLogo = new ImageIcon(getClass().getResource("../images/Teamlogo.png")).getImage();
+        logoButton = new JButton(new ImageIcon(teamLogo.getScaledInstance(170, 50, Image.SCALE_SMOOTH)));
+        logoButton.addActionListener(this);
+        logoButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoButton.setBorder(BorderFactory.createEmptyBorder());
+        logoButton.setBounds(0, 500, 170, 50); 
+        logoButton.setContentAreaFilled(false);
+        bgLabel.add(logoButton);
+        
+        
+        
         Image startImage = new ImageIcon(getClass().getResource("../images/startButtonImage.png")).getImage();
         startButton = new JButton(new ImageIcon(startImage.getScaledInstance(170, 50, Image.SCALE_SMOOTH)));
         startButton.addActionListener(this);
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startButton.setBorder(BorderFactory.createEmptyBorder());
-        startButton.setBounds(360, 240, 170, 50); // startButton의 위치와 크기 수정
+        startButton.setBounds(360, 240, 170, 50); 
         startButton.setContentAreaFilled(false);
         bgLabel.add(startButton);
+
+        
         
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+
+            	
                 Image pressedStartImage = new ImageIcon(getClass().getResource("../images/pressedStartButtonImage.png")).getImage();
                 startButton.setIcon(new ImageIcon(pressedStartImage.getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
             }
@@ -206,6 +253,10 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             @Override
             public void mouseEntered(MouseEvent e) {
+
+                SoundPlayer.playSound("../Resources/button.wav");
+
+
                 startButton.setBounds(360, 240, 180, 60);
                 Image hoverStartImage = new ImageIcon(getClass().getResource("../images/startButtonImage.png")).getImage();
                 startButton.setIcon(new ImageIcon(hoverStartImage.getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
@@ -240,6 +291,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 settingButton.setIcon(new ImageIcon(settingImage.getScaledInstance(120, 40, Image.SCALE_SMOOTH)));
             }
             public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("../Resources/button.wav");
                 settingButton.setBounds(385, 290, 130, 50);
                 Image hoverSettingImage = new ImageIcon(getClass().getResource("../images/settingButtonImage.png")).getImage();
                 settingButton.setIcon(new ImageIcon(hoverSettingImage.getScaledInstance(130, 50, Image.SCALE_SMOOTH)));
@@ -275,6 +327,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 rankButton.setIcon(new ImageIcon(rankImage.getScaledInstance(100, 35, Image.SCALE_SMOOTH)));
             }
             public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("../Resources/button.wav");
                 rankButton.setBounds(393, 335, 110, 45);
                 Image hoverRankImage = new ImageIcon(getClass().getResource("../images/rankButtonImage.png")).getImage();
                 rankButton.setIcon(new ImageIcon(hoverRankImage.getScaledInstance(110, 45, Image.SCALE_SMOOTH)));
@@ -309,6 +362,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 quitButton.setIcon(new ImageIcon(quitImage.getScaledInstance(100, 35, Image.SCALE_SMOOTH)));
             }
             public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("../Resources/button.wav");
             	quitButton.setBounds(395, 440, 110, 45);
                 Image hoverQuitImage = new ImageIcon(getClass().getResource("../images/quitButtonImage.png")).getImage();
                 quitButton.setIcon(new ImageIcon(hoverQuitImage.getScaledInstance(110, 45, Image.SCALE_SMOOTH)));
@@ -337,6 +391,7 @@ public class BeatClass extends JFrame implements ActionListener {
         return icon;
     }
     public void SetListWindows(boolean active){
+    	logoButton.setVisible(!active);
         startButton.setVisible(!active);
         settingButton.setVisible(!active);
         rankButton.setVisible(!active);
