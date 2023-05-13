@@ -75,7 +75,7 @@ public class BeatClass extends JFrame implements ActionListener {
     public class SoundPlayer {
         public static void playSound(String filePath) {
             try {
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(BeatBox.SoundPlayer.class.getResource(filePath));
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(SoundPlayer.class.getResource(filePath));
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 clip.start();
@@ -83,6 +83,8 @@ public class BeatClass extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
         }
+
+        
     }
 
 
