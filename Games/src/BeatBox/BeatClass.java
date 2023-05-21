@@ -1,7 +1,7 @@
 package BeatBox;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -9,7 +9,6 @@ import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
@@ -88,7 +87,11 @@ public class BeatClass extends JFrame implements ActionListener {
     }
 
 
+
+
     public  BeatClass(){
+
+
 
 
         MusicList.add(new SoundPack("Avicii - Levels.mp3","s_Levels.jpg"));
@@ -194,6 +197,57 @@ public class BeatClass extends JFrame implements ActionListener {
         bgLabel2.add(bgList);
         bgLabel.add(logoLabel);
 
+
+
+        JLabel mtextLabel = new JLabel("middle");
+        JLabel ltextLabel = new JLabel("left");
+        JLabel rtextLabel = new JLabel("right");
+        mtextLabel.setForeground(Color.WHITE);
+        ltextLabel.setForeground(Color.WHITE);
+        rtextLabel.setForeground(Color.WHITE);
+
+        int mlabelWidth = 300;
+        int mlabelHeight = 200;
+        int mlabelX = 400;
+        int mlabelY = 0;
+        mtextLabel.setBounds(mlabelX, mlabelY, mlabelWidth, mlabelHeight);
+
+        int llabelWidth = 300;
+        int llabelHeight = 200;
+        int llabelX = 110;
+        int llabelY = 150;
+        ltextLabel.setBounds(llabelX, llabelY, llabelWidth, llabelHeight);
+
+        int rlabelWidth = 300;
+        int rlabelHeight = 200;
+        int rlabelX = 760;
+        int rlabelY = 150;
+        rtextLabel.setBounds(rlabelX, rlabelY, rlabelWidth, rlabelHeight);
+
+        Font font = mtextLabel.getFont();
+        float fontSize = font.getSize() + 15; // 가운데 텍스트 크기 조절
+        Font largerFont = font.deriveFont(fontSize);
+        mtextLabel.setFont(largerFont);
+
+        //폰트 적용 시도, 실패함
+        try {
+            InputStream inputStream = new BufferedInputStream(
+                    new FileInputStream("ka1.ttf"));
+
+            Font newfont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+
+            mtextLabel.setFont(newfont.deriveFont(Font.BOLD, 12f));
+
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        bgLabel2.add(mtextLabel);
+        bgLabel2.add(ltextLabel);
+        bgLabel2.add(rtextLabel);
+
+
+
         //cardLayout.next(contentPanel);
         cardLayout.show(contentPanel,"mainWindows");
         Image leftImage = LoadImage(MusicList.get(selNum-1).image).getImage();
@@ -212,7 +266,9 @@ public class BeatClass extends JFrame implements ActionListener {
         rightList.setBounds(700,270,150,150);
         // JLabel 
         bgLabel2.add(rightList);
-        // 
+        //
+
+
 
         
         
