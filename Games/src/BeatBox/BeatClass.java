@@ -19,7 +19,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
 
 
-    JButton logoButton, startButton, settingButton, rankButton, quitButton;
+    JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton;
     private Image screenImage;
     private Graphics screenGraphic;
 
@@ -249,6 +249,41 @@ public class BeatClass extends JFrame implements ActionListener {
         bgLabel2.add(mtextLabel);
         bgLabel2.add(ltextLabel);
         bgLabel2.add(rtextLabel);
+
+
+        Image MenuButton = new ImageIcon(getClass().getResource("../images/homebutton.png")).getImage();
+        menuButton = new JButton(new ImageIcon(MenuButton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        menuButton.addActionListener(this);
+        menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menuButton.setBorder(BorderFactory.createEmptyBorder());
+        menuButton.setBounds(15, 30, 50, 50);
+        menuButton.setContentAreaFilled(false);
+        bgLabel2.add(menuButton);
+        menuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("../images/pressedhomebutton.png")).getImage();
+                menuButton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("../images/homebutton.png")).getImage();
+                menuButton.setIcon(new ImageIcon(menubutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("../Resources/button.wav");
+                menuButton.setBounds(15, 30, 70, 70);
+                Image hovermainbutton = new ImageIcon(getClass().getResource("../images/homebutton.png")).getImage();
+                menuButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuButton.setBounds(15, 30, 50, 50);
+                Image homebutton = new ImageIcon(getClass().getResource("../images/homebutton.png")).getImage();
+                menuButton.setIcon(new ImageIcon(homebutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+        });
 
 
 
@@ -554,6 +589,11 @@ public class BeatClass extends JFrame implements ActionListener {
         } else if (e.getSource() == quitButton) {
             // Quit
             System.exit(0);
+        }
+
+        else if(e.getSource() == menuButton){
+            cardLayout.show(contentPanel,"mainWindows");
+
         }else if(e.getSource() == rightList){
             selNum++;
             SelectWindowsImageSetting(selNum-1,selNum,selNum+1);
