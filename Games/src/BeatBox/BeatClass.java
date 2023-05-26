@@ -1,14 +1,18 @@
 package BeatBox;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.io.*;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
@@ -490,46 +494,53 @@ public class BeatClass extends JFrame implements ActionListener {
         bgList.setIcon(icon3);
 
     }
-    public void slot1(){
+    public Note slot1(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList1.add(note);
         effectPanel.get(0).add(note.note);
+        return note;
     }
-    public void slot2(){
+    public Note slot2(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList2.add(note);
         effectPanel.get(1).add(note.note);
-    }public void slot3(){
+        return note;
+    }public Note slot3(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList3.add(note);
         effectPanel.get(2).add(note.note);
+        return note;
     }
-    public void slot4(){
+    public Note slot4(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList4.add(note);
         effectPanel.get(3).add(note.note);
+        return note;
     }
-    public void slot5(){
+    public Note slot5(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList5.add(note);
         effectPanel.get(4).add(note.note);
+        return note;
     }
-    public void slot6(){
+    public Note slot6(){
         Note note = (new Note(1,0,0,1,0));
         note.start();
         noteList6.add(note);
         effectPanel.get(5).add(note.note);
+        return note;
     }
 
     public void GameStart(String tn, String di, String mn){
         game = new Game(tn,di,mn);
         game.bc=this;
         System.out.println(tn+"/"+mn);
+        game.start();
     }
     public void actionPerformed(ActionEvent e) {
        
@@ -553,10 +564,7 @@ public class BeatClass extends JFrame implements ActionListener {
             cardLayout.show(contentPanel,"gameWindows");
             GameStart(MusicList.get(selNum).name.split("\\.")[0],"T",MusicList.get(selNum).name);
             introMusic.close();
-            slot1();
-            slot2();
-            slot3();
-            slot4();
+
 
         }
     }

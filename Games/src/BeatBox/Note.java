@@ -1,13 +1,12 @@
 package BeatBox;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 public class Note extends Thread{
 
     public JLabel note;
     int x;
     int y;
-    float speed = 1;
+    float speed = 3;
     int noteType=0;
     float noteLength;
     public Note(int sp, int x,int y,float l,int type){
@@ -21,11 +20,15 @@ public class Note extends Thread{
 
     public void Drop(){
         y+=speed;
+
+        note.setBounds(x,y,100,30);
     }
     public void run(){
         try{
-            Drop();
-            Thread.sleep(Main.SLEEP_TIME);
+            while(true) {
+                Drop();
+                Thread.sleep(Main.SLEEP_TIME);
+            }
         }catch (Exception e){
 
         }

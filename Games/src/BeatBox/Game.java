@@ -7,7 +7,6 @@ public class Game extends Thread{
     public String titleName;
     public String difficulty;
     public String musicName;
-
     private Music gameMusic;
     public Game(String titleName,String difficulty,String musicName){
         this.titleName = titleName;
@@ -22,7 +21,7 @@ public class Game extends Thread{
     }
     @Override
     public void run(){
-
+        dropNotes();
     }
     public void Press(int n){
         bc.effect.get(n).setVisible(true);
@@ -34,6 +33,34 @@ public class Game extends Thread{
         gameMusic.close();
         this.interrupt();
     }
+    public void dropNotes(){
+        FrequencyAnalysis.mainEvent();
+        Beat[] beats= {
+                new Beat(1000,"S"),
+                new Beat(2000,"D"),
+                new Beat(3000,"F"),
+        };
+        int i = 0;
+        while(true){
+            if(beats[i].time<=gameMusic.getTime()){
+                Note note = null;
+                switch(i){
+                    case 0:
+                        note = bc.slot1();
+                        break;
+                    case 1:
+                        note = bc.slot2();
+                        break;
+                    case 2:
+                        note = bc.slot3();
+                        break;
+                };
+                if(note !=null) {
 
+                }
+                i++;
+            }
+        }
+    }
 
 }
