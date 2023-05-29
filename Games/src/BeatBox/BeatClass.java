@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BeatClass extends JFrame implements ActionListener {
 
 
-    JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton;
+    JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton, pause_ExitButton,pause_MenuButton;
     JLabel escLabel;
     boolean gamePanelActive = false; // gamePanel이 켜져 있는지 여부를 저장
     private boolean escPressed = false; // ESC 키 눌림 여부를 저장
@@ -134,15 +134,78 @@ public class BeatClass extends JFrame implements ActionListener {
 
         gamePanelActive = false;
 
-
-
-
-        escLabel = new JLabel("ESC Pressed");
-        escLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        escLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        escLabel.setForeground(Color.black);
+        escLabel = new JLabel("");
         escLabel.setBounds(300, 250, 300, 100);
         escLabel.setVisible(false);
+        escLabel.setOpaque(true);
+
+        JLabel backgroundImageLabel = new JLabel(new ImageIcon(getClass().getResource("../images/gameWallpaperEdit.png")));
+        backgroundImageLabel.setBounds(0, 0, 900, 600);
+        backgroundImageLabel.setVisible(true);
+        escLabel.add(backgroundImageLabel);
+
+
+        Image Exitbutton = new ImageIcon(getClass().getResource("../images/exitButton.png")).getImage();
+        pause_ExitButton = new JButton(new ImageIcon(Exitbutton.getScaledInstance(150, 100, Image.SCALE_SMOOTH)));
+        pause_ExitButton.addActionListener(this);
+        pause_ExitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pause_ExitButton.setBorder(BorderFactory.createEmptyBorder());
+        pause_ExitButton.setBounds(500, 250, 150, 100);
+        pause_ExitButton.setOpaque(true);
+        pause_ExitButton.setContentAreaFilled(false);
+        pause_ExitButton.setBorderPainted(false);
+        pause_ExitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pause_ExitButton.setBounds(500, 250, 150, 100);
+                Image hoverExitButton = new ImageIcon(getClass().getResource("../images/exitButton.png")).getImage();
+                pause_ExitButton.setIcon(new ImageIcon(hoverExitButton.getScaledInstance(200, 150, Image.SCALE_SMOOTH)));
+                SoundPlayer.playSound("../Resources/button.wav");
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+                pause_ExitButton.setBounds(500, 250, 150, 100);
+                Image ExitButton = new ImageIcon(getClass().getResource("../images/exitButton.png")).getImage();
+                pause_ExitButton.setIcon(new ImageIcon(ExitButton.getScaledInstance(150, 100, Image.SCALE_SMOOTH)));
+            }
+
+        });
+
+
+        Image Pause_MenuButton = new ImageIcon(getClass().getResource("../images/pause_MenuButton.png")).getImage();
+        pause_MenuButton = new JButton(new ImageIcon(Pause_MenuButton.getScaledInstance(150, 100, Image.SCALE_SMOOTH)));
+        pause_MenuButton.addActionListener(this);
+        pause_MenuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pause_MenuButton.setBorder(BorderFactory.createEmptyBorder());
+        pause_MenuButton.setBounds(250, 250, 150, 100);
+        pause_MenuButton.setOpaque(true);
+        pause_MenuButton.setContentAreaFilled(false);
+        pause_MenuButton.setBorderPainted(false);
+        pause_MenuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pause_MenuButton.setBounds(250, 250, 150, 100);
+                Image hoverMenuButton = new ImageIcon(getClass().getResource("../images/pressed_Pause_MenuButton.png")).getImage();
+                pause_MenuButton.setIcon(new ImageIcon(hoverMenuButton.getScaledInstance(200, 150, Image.SCALE_SMOOTH)));
+                SoundPlayer.playSound("../Resources/button.wav");
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+                pause_MenuButton.setBounds(250, 250, 150, 100);
+                Image MenuButton = new ImageIcon(getClass().getResource("../images/pause_MenuButton.png")).getImage();
+                pause_MenuButton.setIcon(new ImageIcon(MenuButton.getScaledInstance(150, 100, Image.SCALE_SMOOTH)));
+            }
+
+        });
+
+        backgroundImageLabel.add(pause_ExitButton);
+        backgroundImageLabel.add(pause_MenuButton);
+
+
+
+
 
 
 
@@ -336,7 +399,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             public void mouseEntered(MouseEvent e) {
                 SoundPlayer.playSound("../Resources/button.wav");
-                menuButton.setBounds(15, 30, 70, 70);
+                menuButton.setBounds(15, 30, 50, 50);
                 Image hovermainbutton = new ImageIcon(getClass().getResource("../images/homebutton.png")).getImage();
                 menuButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
             }
@@ -417,7 +480,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 SoundPlayer.playSound("../Resources/button.wav");
 
 
-                startButton.setBounds(360, 240, 180, 60);
+                startButton.setBounds(360, 240, 170, 50);
                 Image hoverStartImage = new ImageIcon(getClass().getResource("../images/startButtonImage.png")).getImage();
                 startButton.setIcon(new ImageIcon(hoverStartImage.getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
             }
@@ -452,7 +515,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             public void mouseEntered(MouseEvent e) {
                 SoundPlayer.playSound("../Resources/button.wav");
-                settingButton.setBounds(385, 290, 130, 50);
+                settingButton.setBounds(385, 290, 120, 40);
                 Image hoverSettingImage = new ImageIcon(getClass().getResource("../images/settingButtonImage.png")).getImage();
                 settingButton.setIcon(new ImageIcon(hoverSettingImage.getScaledInstance(130, 50, Image.SCALE_SMOOTH)));
             }
@@ -488,7 +551,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             public void mouseEntered(MouseEvent e) {
                 SoundPlayer.playSound("../Resources/button.wav");
-                rankButton.setBounds(393, 335, 110, 45);
+                rankButton.setBounds(393, 335, 100, 35);
                 Image hoverRankImage = new ImageIcon(getClass().getResource("../images/rankButtonImage.png")).getImage();
                 rankButton.setIcon(new ImageIcon(hoverRankImage.getScaledInstance(110, 45, Image.SCALE_SMOOTH)));
             }
@@ -523,7 +586,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             public void mouseEntered(MouseEvent e) {
                 SoundPlayer.playSound("../Resources/button.wav");
-            	quitButton.setBounds(395, 440, 110, 45);
+            	quitButton.setBounds(395, 440, 100, 35);
                 Image hoverQuitImage = new ImageIcon(getClass().getResource("../images/quitButtonImage.png")).getImage();
                 quitButton.setIcon(new ImageIcon(hoverQuitImage.getScaledInstance(110, 45, Image.SCALE_SMOOTH)));
             }
@@ -664,6 +727,10 @@ public class BeatClass extends JFrame implements ActionListener {
         } else if (e.getSource() == quitButton) {
             // Quit
             System.exit(0);
+        }else if(e.getSource() == pause_ExitButton){
+            System.exit(0);
+        }else if(e.getSource() == pause_MenuButton){
+            cardLayout.show(contentPanel,"selectWindows");
         }
 
         else if(e.getSource() == menuButton){
