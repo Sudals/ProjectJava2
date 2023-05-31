@@ -433,11 +433,6 @@ public class BeatClass extends JFrame implements ActionListener {
         bgLabel2.add(rightList);
         //
 
-
-
-
-
-
         Image teamLogo = new ImageIcon(getClass().getResource("../images/Teamlogo.png")).getImage();
         logoButton = new JButton(new ImageIcon(teamLogo.getScaledInstance(170, 50, Image.SCALE_SMOOTH)));
         logoButton.addActionListener(this);
