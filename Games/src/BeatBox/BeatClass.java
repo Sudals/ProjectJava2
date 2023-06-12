@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
 
+    private JLabel loadingLabel;
+
+    private static final int LOADING_TIME = 10000;
 
     JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton, pause_ExitButton,pause_MenuButton;
     JLabel escLabel;
@@ -22,6 +25,32 @@ public class BeatClass extends JFrame implements ActionListener {
     private boolean escPressed = false; // ESC 키 눌림 여부를 저장
     public void setEscPressed(boolean pressed){
         escPressed = pressed;
+    }
+
+    private void showLoadingScreen() {
+        ImageIcon loadingIcon = new ImageIcon(getClass().getResource("../images/loading2.gif"));
+        loadingLabel = new JLabel(loadingIcon);
+        loadingLabel.setBackground(Color.BLACK);
+        loadingLabel.setOpaque(true);
+        loadingLabel.setBounds(0, 0, loadingIcon.getIconWidth(), loadingIcon.getIconHeight());
+
+       //이미지 중앙배치
+        int loadingX = (getWidth() - loadingIcon.getIconWidth()) / 2;
+        int loadingY = (getHeight() - loadingIcon.getIconHeight()) / 2;
+
+        loadingLabel.setBounds(loadingX, loadingY, loadingIcon.getIconWidth(), loadingIcon.getIconHeight());
+        contentPanel.add(loadingLabel, "loadingScreen");
+        cardLayout.show(contentPanel, "loadingScreen");
+        Timer timer = new Timer(LOADING_TIME, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(contentPanel, "gameWindows");
+                GameStart(MusicList.get(selNum).name.split("\\.")[0], "T", MusicList.get(selNum).name);
+                introMusic.close();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
 
@@ -122,7 +151,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
         }
 
-        
+
     }
 
 
@@ -711,7 +740,7 @@ public class BeatClass extends JFrame implements ActionListener {
         gamePanelActive = true; // gamePanel이 켜진 상태로 설정
     }
     public void actionPerformed(ActionEvent e) {
-       
+
         if (e.getSource() == startButton) {
             //System.exit(0);
             cardLayout.show(contentPanel,"selectWindows");
@@ -738,9 +767,7 @@ public class BeatClass extends JFrame implements ActionListener {
             selNum--;
             SelectWindowsImageSetting(selNum-1,selNum,selNum+1);
         }else if(e.getSource()==bgList){
-            cardLayout.show(contentPanel,"gameWindows");
-            GameStart(MusicList.get(selNum).name.split("\\.")[0],"T",MusicList.get(selNum).name);
-            introMusic.close();
+            showLoadingScreen();
         }
         }
     }
