@@ -3,25 +3,31 @@ package BeatBox;
 import javax.swing.*;
 public class Note extends Thread{
 
+    public BeatClass bc;
     public JLabel note;
     int x;
     int y;
     float speed = 3;
-    int noteType=0;
+    int noteType;
     float noteLength;
-    public Note(int sp, int x,int y,float l,int type){
+    public Note(BeatClass _bc,int sp, int x,int y,float l,int type){
+        bc=_bc;
         this.x =x;
         this.y = y;
         noteType=type;
         noteLength=l;
-        note = new JLabel(new ImageIcon(getClass().getResource("../images/Note.png")));
-        note.setBounds(x,y,100,30);
+        note = new JLabel(new ImageIcon(getClass().getResource("../images/Note1.png")));
+        note.setBounds(x,y,99,30);
     }
 
     public void Drop(){
         y+=speed;
 
-        note.setBounds(x,y,100,30);
+        note.setBounds(x,y,99,30);
+
+        if(y>280){
+            bc.RemoveNote(noteType,this);
+        }
     }
     public void run(){
         try{

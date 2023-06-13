@@ -22,7 +22,7 @@ public class KeyListener extends KeyAdapter {
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             BeatClass.game.Press(2);
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            BeatClass.game.Press(7);
+            //BeatClass.game.Press(7);
         } else if (e.getKeyCode() == KeyEvent.VK_J) {
             BeatClass.game.Press(3);
         } else if (e.getKeyCode() == KeyEvent.VK_K) {

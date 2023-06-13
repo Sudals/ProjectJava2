@@ -263,7 +263,7 @@ public class BeatClass extends JFrame implements ActionListener {
             safePanel.add(new JLabel(new ImageIcon(lo.getScaledInstance(100,40,Image.SCALE_SMOOTH))));
             safePanel.get(i).setBounds(0,410,100,40);
             safePanel.get(i).setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            Image lo2 = new ImageIcon(getClass().getResource("../images/effect.png")).getImage();
+            Image lo2 = new ImageIcon(getClass().getResource("../images/effect1.png")).getImage();
             effect.add(new JLabel(new ImageIcon(lo2.getScaledInstance(100,500,Image.SCALE_SMOOTH))));
             effect.get(i).setBounds(0,0,100,500);
             //effect.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -272,7 +272,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
 
 
-        bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
+        bgLabel = new JLabel(new ImageIcon(getClass().getResource("../images/main.gif")));
         bgLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         bgLabel2 = new JLabel(new ImageIcon(getClass().getResource("../images/MainWallpaper.png")));
         bgLabel2.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
@@ -661,41 +661,82 @@ public class BeatClass extends JFrame implements ActionListener {
 
     }
     public Note slot1(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,0));
         note.start();
         noteList1.add(note);
         effectPanel.get(0).add(note.note);
         return note;
     }
+    public void RemoveNote(int i,Note n){
+        Note nt=null;
+        //System.out.println(i);
+        switch(i){
+            case 0:
+                nt= noteList1.get(noteList1.indexOf(n));
+                noteList1.remove(nt);
+                //System.out.println(i);
+                break;
+            case 1:
+                nt= noteList2.get(noteList2.indexOf(n));
+                noteList2.remove(nt);
+                //System.out.println(i);
+                break;
+            case 2:
+                nt= noteList3.get(noteList3.indexOf(n));
+                noteList3.remove(nt);
+                //System.out.println(i);
+                break;
+            case 3:
+                nt= noteList4.get(noteList4.indexOf(n));
+                noteList4.remove(nt);
+                //System.out.println(i);
+                break;
+            case 4:
+                nt= noteList5.get(noteList5.indexOf(n));
+                noteList5.remove(nt);
+                //System.out.println(i);
+                break;
+            case 5:
+                nt= noteList6.get(noteList6.indexOf(n));
+                noteList6.remove(nt);
+                //System.out.println(i);
+                break;
+        }
+
+
+        effectPanel.get(i).remove(nt.note);
+        effectPanel.get(i).revalidate();
+        effectPanel.get(i).repaint();
+    }
     public Note slot2(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,1));
         note.start();
         noteList2.add(note);
         effectPanel.get(1).add(note.note);
         return note;
     }public Note slot3(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,2));
         note.start();
         noteList3.add(note);
         effectPanel.get(2).add(note.note);
         return note;
     }
     public Note slot4(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,3));
         note.start();
         noteList4.add(note);
         effectPanel.get(3).add(note.note);
         return note;
     }
     public Note slot5(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,4));
         note.start();
         noteList5.add(note);
         effectPanel.get(4).add(note.note);
         return note;
     }
     public Note slot6(){
-        Note note = (new Note(1,0,0,1,0));
+        Note note = (new Note(this,1,0,0,1,5));
         note.start();
         noteList6.add(note);
         effectPanel.get(5).add(note.note);
