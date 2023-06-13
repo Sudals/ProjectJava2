@@ -6,8 +6,9 @@ public class Note extends Thread{
     public BeatClass bc;
     public JLabel note;
     int x;
-    int y;
+    public int y;
     float speed = 3;
+    public int set=0;
     int noteType;
     float noteLength;
     public Note(BeatClass _bc,int sp, int x,int y,float l,int type){
@@ -16,7 +17,7 @@ public class Note extends Thread{
         this.y = y;
         noteType=type;
         noteLength=l;
-        note = new JLabel(new ImageIcon(getClass().getResource("../images/Note1.png")));
+        note = new JLabel(new ImageIcon(getClass().getResource("images/Note1.png")));
         note.setBounds(x,y,99,30);
     }
 
@@ -24,8 +25,16 @@ public class Note extends Thread{
         y+=speed;
 
         note.setBounds(x,y,99,30);
+        //System.out.println(y);
+        if((y>380&&y<390)||(y>410&&y<420)){
+            set=1;
+        }else if(y>=390&&y<=410){
+            set=2;
+        }else{
+            set=0;
+        }
+        if(y>500){
 
-        if(y>280){
             bc.RemoveNote(noteType,this);
         }
     }

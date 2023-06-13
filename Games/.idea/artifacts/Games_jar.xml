@@ -1,0 +1,70 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Games:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Games_jar</output-path>
+    <root id="archive" name="Games.jar">
+      <element id="module-output" name="Games" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/JAR/commons-math3-3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/JAR/jlayer-1.0.1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/JAR/junit-3.8.2.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/a.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/effect.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/effect1.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/effectPane2l.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/effectPanel.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/exitButton.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g1.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g2.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g3.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g4.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g5.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g6.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g7.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/g8.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/GameBackGround1.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/gameWallpaperEdit.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/gg.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/ggg.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/gggg.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/homebutton.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/introBackground.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/loading.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/loading2.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/logoImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/main.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/MainWallpaper.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/Note.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/Note1.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pause_MenuButton.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressed_Pause_MenuButton.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressedhomebutton.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressedQuitButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressedRankButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressedSettingButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/pressedStartButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/quitButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/rankButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/s_Levels.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/s_TheNights.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/s_Unforgiven.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/s_Without You.jpg" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/settingButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/sibe.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/startButtonImage.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/Teamlogo.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/v1.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/v_1.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/vv.gif" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/images/꼬부기.png" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/Avicii-Levels.wav" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/Avicii - Levels.mp3" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/Avicii - The Nights.mp3" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/Resources/button.wav" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/David Guetta - Without You.mp3" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/ka1.ttf" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/mus1.mp3" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/Resources/notepadSound.wav" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/BeatBox/르세라핌 - Unforgiven.mp3" />
+    </root>
+  </artifact>
+</component>

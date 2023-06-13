@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrequencyAnalysis {
-    public static List<Double> onsets= new ArrayList<Double>();
-    public static List<Double> times= new ArrayList<Double>();
-    public static void mainEvent() {
+    public  List<Double> onsets= new ArrayList<Double>();
+    public List<Double> times= new ArrayList<Double>();
+    public void mainEvent() {
         try {
             onsets.clear();
             times.clear();
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                    FrequencyAnalysis.class.getResourceAsStream("../Resources/Avicii-Levels.wav"));
+                    getClass().getResource("Avicii-Levels.wav"));
             AudioFormat format = audioInputStream.getFormat();
             int numChannels = format.getChannels();
             float sampleRate = format.getSampleRate();
@@ -48,7 +48,7 @@ public class FrequencyAnalysis {
                     sa++;
                     times.add(ttimes.get(i));
                     onsets.add(tonsets.get(i));
-                    System.out.println(sa+" Onset detected at " + ttimes.get(i) + " seconds"+" f : "+tonsets.get(i));
+                    //System.out.println(sa+" Onset detected at " + ttimes.get(i) + " seconds"+" f : "+tonsets.get(i));
                 }
             }
             audioInputStream.close();

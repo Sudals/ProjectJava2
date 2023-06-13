@@ -1,11 +1,11 @@
 package BeatBox;
 
 import javazoom.jl.player.Player;
-import javax.sound.sampled.*;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 
 public class Music extends Thread{
     private Player player;
@@ -16,11 +16,14 @@ public class Music extends Thread{
     public boolean isPaused;
     public Music(String name, boolean isLoop){
         try{
+
             this.isLoop=isLoop;
-            file=new File(Main.class.getResource("../Resources/"+name).toURI());
-            fis=new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
-            player = new Player(bis);
+            System.out.println("Resources/"+name);
+            //file=new File(Main.class.getResource(name).toURI());
+            //fis=new FileInputStream(name);
+            //bis = new BufferedInputStream(fis);
+            InputStream inputStream = getClass().getResourceAsStream(name);
+            player = new Player(inputStream);
         }catch(Exception e){
             System.out.println((e.getMessage()));
         }

@@ -16,7 +16,7 @@ public class KeyListener extends KeyAdapter {
         try {
             // 효과음 파일 로드
             soundClip = AudioSystem.getClip();
-            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource("../Resources/notepadSound.wav")));
+            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource("Resources/notepadSound.wav")));
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
