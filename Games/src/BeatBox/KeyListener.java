@@ -11,6 +11,7 @@ import java.io.IOException;
 public class KeyListener extends KeyAdapter {
 
     private BeatClass beatClass;
+
     public KeyListener(BeatClass beatClass) {
         this.beatClass = beatClass;
         try {
@@ -22,7 +23,9 @@ public class KeyListener extends KeyAdapter {
         }
     }
 
-    private Clip soundClip; 
+    private Clip soundClip;
+
+
 
 
     @Override
@@ -31,7 +34,7 @@ public class KeyListener extends KeyAdapter {
             return;
         }
         System.out.println(e.getKeyCode());
-        if (e.getKeyCode() == KeyEvent.VK_A) {
+        if (e.getKeyCode() == KeyEvent.VK_A){
             BeatClass.game.Press(0);
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             BeatClass.game.Press(1);
@@ -46,21 +49,7 @@ public class KeyListener extends KeyAdapter {
         } else if (e.getKeyCode() == KeyEvent.VK_L) {
             BeatClass.game.Press(5);
         }
-        else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if (!beatClass.isGamePanelActive()) {
-                return; // gamePanel이 꺼져있을 경우 동작하지 않음
-            }
-            if (!beatClass.isEscPressed()) {
-                beatClass.setEscPressed(true);
-                beatClass.getEscLabel().setVisible(true);
-                beatClass.getContentPanel().add(beatClass.getEscLabel(), "escScreen");
-                beatClass.getCardLayout().show(beatClass.getContentPanel(), "escScreen");
-            }else {
-                beatClass.setEscPressed(false);
-                beatClass.getEscLabel().setVisible(false);
-                beatClass.getCardLayout().show(beatClass.getContentPanel(), "gameWindows"); // 게임호면으로 복귀
-            }
-        }
+
         if (e.getKeyCode() == KeyEvent.VK_A ||
                 e.getKeyCode() == KeyEvent.VK_S ||
                 e.getKeyCode() == KeyEvent.VK_D ||
