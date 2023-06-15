@@ -5,26 +5,36 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
 
+
+
+    private ImageIcon homeImage;
+    private ImageIcon rankhomeImage;
+    private JButton soundButton;
+    private ImageIcon soundImage;
+    private ImageIcon noSoundImage;
+    private boolean isSoundOn;
+
+
+
     private JLabel loadingLabel;
     public int Score=0;
     private static final int LOADING_TIME = 10000;
 
-    JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton, pause_ExitButton,pause_MenuButton;
+    JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton, pause_ExitButton,pause_MenuButton, homeButton, rankhomeButton, gameBackbutton;
     JLabel escLabel;
     boolean gamePanelActive = false; // gamePanel이 켜져 있는지 여부를 저장
     private boolean escPressed = false; // ESC 키 눌림 여부를 저장
     public void setEscPressed(boolean pressed){
         escPressed = pressed;
     }
+
+
 
     private void showLoadingScreen() {
         ImageIcon loadingIcon = new ImageIcon(getClass().getResource("images/loading2.gif"));
@@ -51,6 +61,7 @@ public class BeatClass extends JFrame implements ActionListener {
         timer.setRepeats(false);
         timer.start();
     }
+
 
 
     public boolean isGamePanelActive() {
@@ -91,6 +102,9 @@ public class BeatClass extends JFrame implements ActionListener {
         this.repaint();
     }
     public static Game game;
+    JLabel scorenumberLabel;
+    JLabel settingLabel;
+    JLabel rankLabel;
     JLabel bgLabel;
     JLabel bgLabel2;
     JButton bgList;
@@ -120,6 +134,8 @@ public class BeatClass extends JFrame implements ActionListener {
     int endNum;
     int startNum;
     JPanel mainPanel;
+    JPanel settingPanel;
+    JPanel rankPanel;
 
     Music introMusic;
 
@@ -157,6 +173,10 @@ public class BeatClass extends JFrame implements ActionListener {
 
     private KeyListener keyListener;
     public  BeatClass(){
+
+
+
+
 
 
 
@@ -255,8 +275,12 @@ public class BeatClass extends JFrame implements ActionListener {
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setSize(900,600);
+        settingPanel = new JPanel((new BorderLayout()));
         mainPanel = new JPanel(new BorderLayout());
         gamePanel = new JPanel(new BorderLayout());
+        rankPanel = new JPanel(new BorderLayout());
+        settingPanel.setSize(900,600);;
+        rankPanel.setSize(900,600);;
         gamePanel.setSize(900,600);;
         frame.addKeyListener(new KeyListener(beatClass));
         frame.setFocusable(true);
@@ -296,7 +320,353 @@ public class BeatClass extends JFrame implements ActionListener {
             effect.get(i).setBounds(0,0,100,500);
             //effect.get(i).setBorder(BorderFactory.createLineBorder(Color.RED));
         }
+        rankPanel = new JPanel(null);
+        rankLabel = new JLabel(new ImageIcon(getClass().getResource("images/MainWallpaper.png")));
+        rankLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        rankLabel.setBounds(0, 0, 900, 560);
+        rankPanel.add(rankLabel);
+        ImageIcon rankhomeImage = new ImageIcon(getClass().getResource("images/homebutton.png"));
+        Image homeimage = rankhomeImage.getImage();
+        Image homescaledImage = homeimage.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        rankhomeImage = new ImageIcon(homescaledImage);
 
+        rankhomeButton = new JButton(rankhomeImage);
+        rankhomeButton.setBounds(10, 10, 70, 70);
+        rankhomeButton.setContentAreaFilled(false);
+        rankhomeButton.addActionListener(this);
+        rankhomeButton.setBorderPainted(false);
+        rankLabel.add(rankhomeButton);
+        rankhomeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("images/pressedhomebutton.png")).getImage();
+                rankhomeButton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("images/homebutton.png")).getImage();
+                rankhomeButton.setIcon(new ImageIcon(menubutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("Resources/button.wav");
+                rankhomeButton.setBounds(10, 10, 70, 70);
+                Image hovermainbutton = new ImageIcon(getClass().getResource("images/pressedhomebutton.png")).getImage();
+                rankhomeButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                rankhomeButton.setBounds(10, 10, 70, 70);
+                Image homebutton = new ImageIcon(getClass().getResource("images/homebutton.png")).getImage();
+                rankhomeButton.setIcon(new ImageIcon(homebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+        });
+
+
+
+
+
+
+        ImageIcon leftArrowIcon = new ImageIcon(getClass().getResource("images/leftArrow.png"));
+        Image leftArrowImage = leftArrowIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        ImageIcon resizedLeftArrowIcon = new ImageIcon(leftArrowImage);
+        JButton prevButton = new JButton(resizedLeftArrowIcon);
+        prevButton.setBounds(50, 250, 70, 70);
+        prevButton.setContentAreaFilled(false); // 이미지 배경 없애기
+        prevButton.setBorder(null);
+        rankLabel.add(prevButton);
+        prevButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("images/pressedleftArrow.png")).getImage();
+                prevButton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("images/leftArrow.png")).getImage();
+                prevButton.setIcon(new ImageIcon(menubutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("Resources/button.wav");
+                prevButton.setBounds(50, 250, 70, 70);
+                Image hovermainbutton = new ImageIcon(getClass().getResource("images/pressedleftArrow.png")).getImage();
+                prevButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                prevButton.setBounds(50, 250, 70, 70);
+                Image homebutton = new ImageIcon(getClass().getResource("images/leftArrow.png")).getImage();
+                prevButton.setIcon(new ImageIcon(homebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+        });
+
+
+
+        ImageIcon rightArrowIcon = new ImageIcon(getClass().getResource("images/rightArrow.png"));
+        Image rightArrowImage = rightArrowIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        ImageIcon resizedRightArrowIcon = new ImageIcon(rightArrowImage);
+        JButton nextButton = new JButton(resizedRightArrowIcon);
+        nextButton.setBounds(770, 250, 70, 70);
+        nextButton.setContentAreaFilled(false);
+        nextButton.setBorder(null);
+        rankLabel.add(nextButton);
+        nextButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("images/pressedrightArrow.png")).getImage();
+                nextButton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("images/rightArrow.png")).getImage();
+                nextButton.setIcon(new ImageIcon(menubutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("Resources/button.wav");
+
+                Image hovermainbutton = new ImageIcon(getClass().getResource("images/pressedrightArrow.png")).getImage();
+                nextButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+                Image homebutton = new ImageIcon(getClass().getResource("images/rightArrow.png")).getImage();
+                nextButton.setIcon(new ImageIcon(homebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+        });
+
+
+        // 텍스트 라벨 생성
+        JLabel songLabel = new JLabel("[노래이름]");
+        songLabel.setBounds(400, 60, 200, 30);
+
+        songLabel.setForeground(Color.WHITE);
+        Font songLabelFont = songLabel.getFont();
+        songLabel.setFont(songLabelFont.deriveFont(20f));
+        rankLabel.add(songLabel);
+
+        int startX = 400;
+        int startY = 150;
+        int labelWidth = 200;
+        int labelHeight = 30;
+        int labelGap = 40; // 간격
+
+
+        JLabel rankLabel1 = new JLabel("1. 이름 - 점수");
+        rankLabel1.setBounds(400, 150, labelWidth, labelHeight);
+        rankLabel1.setForeground(Color.WHITE);
+        Font rankLabel1Font = rankLabel1.getFont();
+        rankLabel1.setFont(rankLabel1Font.deriveFont(15f));
+        rankLabel.add(rankLabel1);
+
+        JLabel rankLabel2 = new JLabel("2. 이름 - 점수");
+        rankLabel2.setBounds(400, 190, labelWidth, labelHeight);
+        rankLabel2.setForeground(Color.WHITE);
+        Font rankLabel2Font = rankLabel2.getFont();
+        rankLabel2.setFont(rankLabel2Font.deriveFont(15f));
+        rankLabel.add(rankLabel2);
+
+        JLabel rankLabel3 = new JLabel("3. 이름 - 점수");
+        rankLabel3.setBounds(400, 230, labelWidth, labelHeight);
+        rankLabel3.setForeground(Color.WHITE);
+        Font rankLabel3Font = rankLabel3.getFont();
+        rankLabel3.setFont(rankLabel3Font.deriveFont(15f));
+        rankLabel.add(rankLabel3);
+
+        JLabel rankLabel4 = new JLabel("4. 이름 - 점수");
+        rankLabel4.setBounds(400, 270, labelWidth, labelHeight);
+        rankLabel4.setForeground(Color.WHITE);
+        Font rankLabel4Font = rankLabel4.getFont();
+        rankLabel4.setFont(rankLabel4Font.deriveFont(15f));
+        rankLabel.add(rankLabel4);
+
+        JLabel rankLabel5 = new JLabel("5. 이름 - 점수");
+        rankLabel5.setBounds(400, 310, labelWidth, labelHeight);
+        rankLabel5.setForeground(Color.WHITE);
+        Font rankLabel5Font = rankLabel5.getFont();
+        rankLabel5.setFont(rankLabel5Font.deriveFont(15f));
+        rankLabel.add(rankLabel5);
+
+        JLabel rankLabel6 = new JLabel("6. 이름 - 점수");
+        rankLabel6.setBounds(400, 350, labelWidth, labelHeight);
+        rankLabel6.setForeground(Color.WHITE);
+        Font rankLabel6Font = rankLabel6.getFont();
+        rankLabel6.setFont(rankLabel6Font.deriveFont(15f));
+        rankLabel.add(rankLabel6);
+
+        JLabel rankLabel7 = new JLabel("7. 이름 - 점수");
+        rankLabel7.setBounds(400, 390, labelWidth, labelHeight);
+        rankLabel7.setForeground(Color.WHITE);
+        Font rankLabel7Font = rankLabel7.getFont();
+        rankLabel7.setFont(rankLabel7Font.deriveFont(15f));
+        rankLabel.add(rankLabel7);
+
+        JLabel rankLabel8 = new JLabel("8. 이름 - 점수");
+        rankLabel8.setBounds(400, 430, labelWidth, labelHeight);
+        rankLabel8.setForeground(Color.WHITE);
+        Font rankLabel8Font = rankLabel8.getFont();
+        rankLabel8.setFont(rankLabel8Font.deriveFont(15f));
+        rankLabel.add(rankLabel8);
+
+        JLabel rankLabel9 = new JLabel("9. 이름 - 점수");
+        rankLabel9.setBounds(400, 470, labelWidth, labelHeight);
+        rankLabel9.setForeground(Color.WHITE);
+        Font rankLabel9Font = rankLabel9.getFont();
+        rankLabel9.setFont(rankLabel9Font.deriveFont(15f));
+        rankLabel.add(rankLabel9);
+
+        JLabel rankLabel10 = new JLabel("10. 이름 - 점수");
+        rankLabel10.setBounds(400, 510, labelWidth, labelHeight);
+        rankLabel10.setForeground(Color.WHITE);
+        Font rankLabel10Font = rankLabel10.getFont();
+        rankLabel10.setFont(rankLabel10Font.deriveFont(15f));
+        rankLabel.add(rankLabel10);
+
+
+
+
+
+
+
+        settingPanel = new JPanel(null);
+        settingLabel = new JLabel(new ImageIcon(getClass().getResource("images/MainWallpaper.png")));
+        settingLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        settingLabel.setBounds(0, 0, 900, 560);
+        settingPanel.add(settingLabel);
+
+        ImageIcon homeImage = new ImageIcon(getClass().getResource("images/homebutton.png"));
+        Image image = homeImage.getImage();
+        Image scaledImage = image.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        homeImage = new ImageIcon(scaledImage);
+
+        homeButton = new JButton(homeImage);
+        homeButton.setBounds(10, 10, 70, 70);
+        homeButton.setContentAreaFilled(false);
+        homeButton.addActionListener(this);
+        homeButton.setBorderPainted(false);
+        homeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("images/pressedhomebutton.png")).getImage();
+                homeButton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("images/homebutton.png")).getImage();
+                homeButton.setIcon(new ImageIcon(menubutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("Resources/button.wav");
+
+                Image hovermainbutton = new ImageIcon(getClass().getResource("images/pressedhomebutton.png")).getImage();
+                homeButton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+                Image homebutton = new ImageIcon(getClass().getResource("images/homebutton.png")).getImage();
+                homeButton.setIcon(new ImageIcon(homebutton.getScaledInstance(70, 70, Image.SCALE_SMOOTH)));
+            }
+        });
+        soundImage = new ImageIcon(getClass().getResource("images/unMute.png"));
+        noSoundImage = new ImageIcon(getClass().getResource("images/mute.png"));
+        isSoundOn = true;
+        soundButton = new JButton(soundImage);
+        int buttonSize = 150;
+        soundButton.setBounds(50, 200, buttonSize, buttonSize); // 버튼 위치와 크기를 직접 지정
+
+// 이미지 크기 조정
+        Image soundImageScaled = soundImage.getImage().getScaledInstance(buttonSize, buttonSize, Image.SCALE_SMOOTH);
+        ImageIcon resizedSoundImage = new ImageIcon(soundImageScaled);
+        soundButton.setIcon(resizedSoundImage);
+        soundButton.setBorder(null);
+        soundButton.setContentAreaFilled(false); // 버튼 배경 투명으로 설정
+        soundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toggleSound();
+            }
+        });
+        JLabel soundButtonLabel = new JLabel("INTRO MUSIC ON/OFF");
+        soundButtonLabel.setBounds(50, 160, 150, 30);
+        soundButtonLabel.setForeground(Color.WHITE);
+        settingLabel.add(soundButtonLabel);
+        settingLabel.add(soundButton);
+        settingLabel.add(homeButton);
+
+        String[] comboBoxLabels = {"KEY 1 SETTING", "KEY 2 SETTING", "KEY 3 SETTING", "KEY 4 SETTING", "KEY 5 SETTING", "KEY 6 SETTING"};
+
+        JComboBox<String> comboBox1 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox1.setBounds(350, 150, 200, 30);
+        settingLabel.add(comboBox1);
+        JLabel comboBoxLabel1 = new JLabel(comboBoxLabels[0]);
+        comboBoxLabel1.setBounds(350, 120, 200, 30);
+        comboBoxLabel1.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel1);
+
+        JComboBox<String> comboBox2 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox2.setBounds(350, 210, 200, 30);
+        settingLabel.add(comboBox2);
+        JLabel comboBoxLabel2 = new JLabel(comboBoxLabels[1]);
+        comboBoxLabel2.setBounds(350, 180, 200, 30);
+        comboBoxLabel2.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel2);
+
+        JComboBox<String> comboBox3 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox3.setBounds(350, 270, 200, 30);
+        settingLabel.add(comboBox3);
+        JLabel comboBoxLabel3 = new JLabel(comboBoxLabels[2]);
+        comboBoxLabel3.setBounds(350, 240, 200, 30);
+        comboBoxLabel3.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel3);
+
+        JComboBox<String> comboBox4 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox4.setBounds(350, 330, 200, 30);
+        settingLabel.add(comboBox4);
+        JLabel comboBoxLabel4 = new JLabel(comboBoxLabels[3]);
+        comboBoxLabel4.setBounds(350, 300, 200, 30);
+        comboBoxLabel4.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel4);
+
+        JComboBox<String> comboBox5 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox5.setBounds(350, 390, 200, 30);
+        settingLabel.add(comboBox5);
+        JLabel comboBoxLabel5 = new JLabel(comboBoxLabels[4]);
+        comboBoxLabel5.setBounds(350, 360, 200, 30);
+        comboBoxLabel5.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel5);
+
+        JComboBox<String> comboBox6 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox6.setBounds(350, 450, 200, 30);
+        settingLabel.add(comboBox6);
+        JLabel comboBoxLabel6 = new JLabel(comboBoxLabels[5]);
+        comboBoxLabel6.setBounds(350, 420, 200, 30);
+        comboBoxLabel6.setForeground(Color.WHITE);
+        settingLabel.add(comboBoxLabel6);
+
+        JButton applyButton = new JButton("APPLY");
+        applyButton.setBounds(750, 500, 80, 30);
+        settingLabel.add(applyButton);
+
+        String[] effectOptions = {"EFFECT 1", "EFFECT 2", "EFFECT 3", "EFFECT 4", "EFFECT 5", "EFFECT 6"};
+        JComboBox<String> effectComboBox = new JComboBox<>(effectOptions);
+        effectComboBox.setBounds(650, 250, 150, 30);
+        settingLabel.add(effectComboBox);
+        JLabel effectComboBoxLabel = new JLabel("NOTEPAD SOUND");
+        effectComboBoxLabel.setBounds(650, 220, 150, 30);
+        effectComboBoxLabel.setForeground(Color.WHITE);
+        settingLabel.add(effectComboBoxLabel);
+
+        JLabel settingnameLabel = new JLabel("SETTING PAGE");
+        Font font3 = settingnameLabel.getFont();
+        Font boldFont3 = new Font(font3.getFontName(), Font.BOLD, font3.getSize() + 20);
+        settingnameLabel.setFont(boldFont3);
+        settingnameLabel.setBounds(330, 10, 300, 30);
+        settingnameLabel.setForeground(Color.WHITE);
+        settingLabel.add(settingnameLabel);
 
 
 
@@ -317,10 +687,13 @@ public class BeatClass extends JFrame implements ActionListener {
         //logoLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         //panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
         contentPanel.add(panel,"selectWindows");
+        contentPanel.add(settingPanel,"settingWindows");
+        contentPanel.add(rankPanel,"rankWindows" );
         //mainPanel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
         contentPanel.add(mainPanel,"mainWindows");
         contentPanel.add(gamePanel,"gameWindows");
         //add(bgList);
+
         mainPanel.add(bgLabel);
         gamePanel.add(gifBackGround);
         //gamePanel.add(gameLabel);
@@ -331,6 +704,76 @@ public class BeatClass extends JFrame implements ActionListener {
              effect.get(i).setVisible(false);
             System.out.println(effectPanel.get(i).getBounds());
         }
+
+        ImageIcon gameWallpapersideimg = new ImageIcon(getClass().getResource("images/gameWallpapersideEdit.png"));
+        JLabel gameWallpaperside = new JLabel(gameWallpapersideimg);
+        int imageWidth = gameWallpapersideimg.getIconWidth();
+        int imageHeight = gameWallpapersideimg.getIconHeight();
+        gameWallpaperside.setBounds(0, 0, imageWidth, imageHeight); // 이미지 라벨 위치와 크기를 지정
+        gifBackGround.add(gameWallpaperside);
+
+        Image gameBackbuttonimg = new ImageIcon(getClass().getResource("images/gameBackbutton.png")).getImage();
+        gameBackbutton = new JButton(new ImageIcon(gameBackbuttonimg.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        gameBackbutton.addActionListener(this);
+        gameBackbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameBackbutton.setBorder(BorderFactory.createEmptyBorder());
+        gameBackbutton.setBounds(15, 30, 50, 50);
+        gameBackbutton.setContentAreaFilled(false);
+        gameWallpaperside.add(gameBackbutton);
+        gameBackbutton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Image pressedhomebutton = new ImageIcon(getClass().getResource("images/pressedgameBackbutton.png")).getImage();
+                gameBackbutton.setIcon(new ImageIcon(pressedhomebutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Image menubutton = new ImageIcon(getClass().getResource("images/gameBackbutton.png")).getImage();
+                gameBackbutton.setIcon(new ImageIcon(menubutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+            public void mouseEntered(MouseEvent e) {
+                SoundPlayer.playSound("Resources/button.wav");
+                gameBackbutton.setBounds(15, 30, 50, 50);
+                Image hovermainbutton = new ImageIcon(getClass().getResource("images/pressedgameBackbutton.png")).getImage();
+                gameBackbutton.setIcon(new ImageIcon(hovermainbutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                gameBackbutton.setBounds(15, 30, 50, 50);
+                Image homebutton = new ImageIcon(getClass().getResource("images/gameBackbutton.png")).getImage();
+                gameBackbutton.setIcon(new ImageIcon(homebutton.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            }
+        });
+
+        ImageIcon scoreImg = new ImageIcon(getClass().getResource("images/score.png"));
+        JLabel scoreLabel = new JLabel(scoreImg);
+
+        Image scorescaledImage = scoreImg.getImage().getScaledInstance(170, 80, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scorescaledImage);
+        scoreLabel.setIcon(scaledIcon);
+        scoreLabel.setBounds(35, 150, 170, 80);
+        gameWallpaperside.add(scoreLabel);
+
+
+
+// 폰트를 적용한 새로운 JLabel 생성
+        scorenumberLabel = new JLabel(Integer.toString(Score));
+        scorenumberLabel.setBounds(18, 250, labelWidth, 40); // 텍스트 라벨 위치와 크기 지정
+        scorenumberLabel.setForeground(Color.WHITE); // 글자 색상을 흰색으로 설정
+        Font font2 = scorenumberLabel.getFont();
+        Font boldFont2 = font2.deriveFont(font2.getSize() + 30f);
+        scorenumberLabel.setFont(boldFont2);
+        scorenumberLabel.setText(Integer.toString(Score));
+        scorenumberLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // 폰트 설정
+
+// 다른 라벨에 텍스트 라벨 추가
+        gameWallpaperside.add(scorenumberLabel);
+
+
+
 
 
         //gamePanel.add(logoLabel);
@@ -480,9 +923,6 @@ public class BeatClass extends JFrame implements ActionListener {
         startButton.setBounds(360, 240, 170, 50);
         startButton.setContentAreaFilled(false);
         bgLabel.add(startButton);
-
-
-
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -499,10 +939,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
             @Override
             public void mouseEntered(MouseEvent e) {
-
                 SoundPlayer.playSound("Resources/button.wav");
-
-
                 startButton.setBounds(360, 240, 170, 50);
                 Image hoverStartImage = new ImageIcon(getClass().getResource("images/startButtonImage.png")).getImage();
                 startButton.setIcon(new ImageIcon(hoverStartImage.getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
@@ -625,6 +1062,23 @@ public class BeatClass extends JFrame implements ActionListener {
 
         introMusic = new Music("mus1.mp3",true);
         introMusic.start();
+    }
+
+
+
+    private void toggleSound() {
+        isSoundOn = !isSoundOn;
+        if (isSoundOn) {
+            Image soundImageScaled = soundImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            ImageIcon resizedSoundImage = new ImageIcon(soundImageScaled);
+            soundButton.setBorder(null);
+            soundButton.setIcon(resizedSoundImage);
+        } else {
+            Image noSoundImageScaled = noSoundImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            ImageIcon resizedNoSoundImage = new ImageIcon(noSoundImageScaled);
+            soundButton.setBorder(null);
+            soundButton.setIcon(resizedNoSoundImage);
+        }
     }
 
 
@@ -761,6 +1215,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 break;
         }
         System.out.println(Score);
+        scorenumberLabel.setText(Integer.toString(Score));
     }
     public Note slot1(){
         Note note = (new Note(this,1,0,0,1,0));
@@ -859,15 +1314,22 @@ public class BeatClass extends JFrame implements ActionListener {
             //System.exit(0);
             cardLayout.show(contentPanel,"selectWindows");
         } else if (e.getSource() == settingButton) {
-            // Setting
+            cardLayout.show(contentPanel, "settingWindows");
         } else if (e.getSource() == rankButton) {
-            // Rank
+            cardLayout.show(contentPanel, "rankWindows");
         } else if (e.getSource() == quitButton) {
             // Quit
             System.exit(0);
         }else if(e.getSource() == pause_ExitButton){
             System.exit(0);
         }else if(e.getSource() == pause_MenuButton){
+            cardLayout.show(contentPanel,"selectWindows");
+        }else if(e.getSource() == homeButton){
+            cardLayout.show(contentPanel,"mainWindows");
+        }
+        else if(e.getSource() == rankhomeButton){
+            cardLayout.show(contentPanel,"mainWindows");
+        }else if(e.getSource() == gameBackbutton){
             cardLayout.show(contentPanel,"selectWindows");
         }
 
