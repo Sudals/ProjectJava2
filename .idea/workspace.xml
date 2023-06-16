@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ProjectJava2:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a5827ab-a034-42f7-96fa-db4cf5a152d8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectJava2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectJava2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/Note.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$ScoreClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$ScoreClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$SoundPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$SoundPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,16 +51,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/Git/rrr/ProjectJava2/Games/src/JAR/mysql-connector-j-8.0.33.jar",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Git/rrr/ProjectJava2/Games/src/BeatBox/images/꼬부기.png&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BeatBox.Main" />

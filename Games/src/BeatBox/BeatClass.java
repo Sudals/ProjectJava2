@@ -47,10 +47,12 @@ public class BeatClass extends JFrame implements ActionListener {
             }
         }
     }
-
+    JComboBox<String> effectComboBox;
     public List<ScoreClass> classList = new ArrayList<>();
     JLabel songLabel;
+    public void ClickSound(){
 
+    }
     public List<ScoreClass> ScoreRead() {
         String filePath = "./data.json";
 
@@ -88,7 +90,7 @@ public class BeatClass extends JFrame implements ActionListener {
         }
         return new ArrayList<>();
     }
-
+    public String musicName;
     public void ScoreSave() {
 
         // 클래스 객체 생성 및 리스트에 추가
@@ -374,13 +376,14 @@ public class BeatClass extends JFrame implements ActionListener {
         pause_ExitButton.setOpaque(true);
         pause_ExitButton.setContentAreaFilled(false);
         pause_ExitButton.setBorderPainted(false);
+        musicName="Resources/button.wav";
         pause_ExitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 pause_ExitButton.setBounds(500, 250, 150, 100);
                 Image hoverExitButton = new ImageIcon(getClass().getResource("images/exitButton.png")).getImage();
                 pause_ExitButton.setIcon(new ImageIcon(hoverExitButton.getScaledInstance(200, 150, Image.SCALE_SMOOTH)));
-                SoundPlayer.playSound("Resources/button.wav");
+                SoundPlayer.playSound(musicName);
 
             }
 
@@ -408,7 +411,7 @@ public class BeatClass extends JFrame implements ActionListener {
                 pause_MenuButton.setBounds(250, 250, 150, 100);
                 Image hoverMenuButton = new ImageIcon(getClass().getResource("images/pressed_Pause_MenuButton.png")).getImage();
                 pause_MenuButton.setIcon(new ImageIcon(hoverMenuButton.getScaledInstance(200, 150, Image.SCALE_SMOOTH)));
-                SoundPlayer.playSound("Resources/button.wav");
+                SoundPlayer.playSound(musicName);
 
             }
 
@@ -432,7 +435,7 @@ public class BeatClass extends JFrame implements ActionListener {
         endNum = MusicList.size() - 1;
         startNum = 0;
         JFrame frame = new JFrame("Image Scaling Example");
-        keyListener = new KeyListener(this);
+        keyListener = new KeyListener(this,musicName);
         frame.addKeyListener(keyListener);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("BeatBox");
@@ -453,7 +456,7 @@ public class BeatClass extends JFrame implements ActionListener {
         ;
         gamePanel.setSize(900, 600);
         ;
-        frame.addKeyListener(new KeyListener(beatClass));
+        frame.addKeyListener(new KeyListener(beatClass,musicName));
         frame.setFocusable(true);
         frame.requestFocus();
         cardLayout = new CardLayout();
@@ -919,7 +922,7 @@ public class BeatClass extends JFrame implements ActionListener {
         settingLabel.add(applyButton);
 
         String[] effectOptions = {"EFFECT 1", "EFFECT 2", "EFFECT 3", "EFFECT 4", "EFFECT 5", "EFFECT 6"};
-        JComboBox<String> effectComboBox = new JComboBox<>(effectOptions);
+        effectComboBox = new JComboBox<>(effectOptions);
         effectComboBox.setBounds(650, 250, 150, 30);
         settingLabel.add(effectComboBox);
         JLabel effectComboBoxLabel = new JLabel("NOTEPAD SOUND");
@@ -1392,6 +1395,26 @@ public class BeatClass extends JFrame implements ActionListener {
         jc4 = comboBox4.getSelectedItem().toString();
         jc5 = comboBox5.getSelectedItem().toString();
         jc6 = comboBox6.getSelectedItem().toString();
+        switch(effectComboBox.getSelectedItem().toString()){
+            case "Effect 1":
+                musicName="Resources/button.wav";
+                break;
+            case "Effect 2":
+                musicName="Resources/notepadSound.wav";
+                break;
+            case "Effect 3":
+                musicName="Resources/notepadSound2.wav";
+                break;
+            case "Effect 4":
+                musicName="Resources/notepadSound3.wav";
+                break;
+            case "Effect 5":
+                musicName="Resources/notepadSound4.wav";
+                break;
+            case "Effect 6":
+                musicName="Resources/notepadSound5.wav";
+                break;
+        }
     }
 
     public ImageIcon LoadImage(String name) {
@@ -1462,12 +1485,15 @@ public class BeatClass extends JFrame implements ActionListener {
         endExc.setText(Exc + "회");
         endScore.setText(Score + "점");
         cardLayout.show(contentPanel, "endPanel");
+
     }
 
     public void StartWindows() {
         BD = 0;
         GT = 0;
         Exc = 0;
+        Score=0;
+        scorenumberLabel.setText(Integer.toString(Score));
     }
 
     public void PressJMT(int i) {
@@ -2110,7 +2136,10 @@ public class BeatClass extends JFrame implements ActionListener {
                 break;
         }
     }
-
+    public void Skip(){
+        game.close();
+        EndWindows();
+    }
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == startButton) {
@@ -2118,6 +2147,8 @@ public class BeatClass extends JFrame implements ActionListener {
             cardLayout.show(contentPanel, "selectWindows");
         } else if (e.getSource() == endButton) {
             ScoreSave();
+            introMusic = new Music("mus1.mp3", true);
+            introMusic.start();
             cardLayout.show(contentPanel, "selectWindows");
         } else if (e.getSource() == settingButton) {
             cardLayout.show(contentPanel, "settingWindows");
@@ -2130,6 +2161,8 @@ public class BeatClass extends JFrame implements ActionListener {
         } else if (e.getSource() == pause_ExitButton) {
             System.exit(0);
         } else if (e.getSource() == pause_MenuButton) {
+            introMusic = new Music("mus1.mp3", true);
+            introMusic.start();
             cardLayout.show(contentPanel, "selectWindows");
         } else if (e.getSource() == homeButton) {
             cardLayout.show(contentPanel, "mainWindows");
@@ -2137,6 +2170,9 @@ public class BeatClass extends JFrame implements ActionListener {
             cardLayout.show(contentPanel, "mainWindows");
         } else if (e.getSource() == gameBackbutton) {
             game.close();
+
+            introMusic = new Music("mus1.mp3", true);
+            introMusic.start();
             cardLayout.show(contentPanel, "selectWindows");
         } else if (e.getSource() == nextButton) {
             NextButtonClick();

@@ -48,6 +48,7 @@ public class Game extends Thread{
     }
     public void dropNotes(){
         frequencyAnalysis.mainEvent();
+        bc.StartWindows();
         gameMusic.start();
         Beat[] beats=new Beat[(int)frequencyAnalysis.onsets.stream().count()];
         for(int i = 0 ; i<(int)frequencyAnalysis.onsets.stream().count();i++) {

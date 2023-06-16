@@ -12,19 +12,27 @@ public class KeyListener extends KeyAdapter {
 
     private BeatClass beatClass;
 
-    public KeyListener(BeatClass beatClass) {
+    public KeyListener(BeatClass beatClass,String str) {
         this.beatClass = beatClass;
         try {
             // 효과음 파일 로드
             soundClip = AudioSystem.getClip();
-            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource("Resources/notepadSound.wav")));
+            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(str)));
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
     }
 
     private Clip soundClip;
-
+    public void SoundSet(String str)  {
+        try {
+            // 효과음 파일 로드
+            soundClip = AudioSystem.getClip();
+            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(str)));
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -44,7 +52,7 @@ public class KeyListener extends KeyAdapter {
             playSoundEffect();
             BeatClass.game.Press(2);
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            //BeatClass.game.Press(7);
+            beatClass.Skip();
         } else if (e.getKeyText(e.getKeyCode()).equals(BeatClass.jc4)) {
             playSoundEffect();
             BeatClass.game.Press(3);

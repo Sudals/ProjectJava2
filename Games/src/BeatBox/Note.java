@@ -26,9 +26,9 @@ public class Note extends Thread{
 
         note.setBounds(x,y,99,30);
         //System.out.println(y);
-        if((y>380&&y<390)||(y>410&&y<420)){
+        if((y>380&&y<390)||(y>420&&y<440)){
             set=1;
-        }else if(y>=390&&y<=410){
+        }else if(y>=390&&y<=420){
             set=2;
         }else{
             set=0;
