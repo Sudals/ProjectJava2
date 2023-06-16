@@ -1362,7 +1362,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
         introMusic = new Music("mus1.mp3", true);
         introMusic.start();
-        cardLayout.show(contentPanel,"endPanel");
+        //cardLayout.show(contentPanel,"endPanel");
     }
 
 
