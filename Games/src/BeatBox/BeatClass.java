@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
-    public class ScoreClass{
+    public class ScoreClass implements Comparable<ScoreClass>{
         public String name;
         public String music;
         public int scroe;
@@ -33,6 +33,16 @@ public class BeatClass extends JFrame implements ActionListener {
             name =n;
             music=m;
             scroe = s;
+        }
+        @Override
+        public int compareTo(ScoreClass c2) {
+            if (this.scroe < c2.scroe) {
+                return 1;
+            } else if (this.scroe > c2.scroe) {
+                return -1;
+            } else {
+                return 0;
+            }
         }
     }
     public List<ScoreClass> classList = new ArrayList<>();
@@ -410,7 +420,8 @@ public class BeatClass extends JFrame implements ActionListener {
         keyListener = new KeyListener(this);
         frame.addKeyListener(keyListener);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("My Game");
+        frame.setTitle("BeatBox");
+        frame.setResizable(false);
         frame.setSize(900, 600);  // 
         frame.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new BorderLayout());
@@ -1278,11 +1289,15 @@ public class BeatClass extends JFrame implements ActionListener {
             Image soundImageScaled = soundImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
             ImageIcon resizedSoundImage = new ImageIcon(soundImageScaled);
             soundButton.setBorder(null);
+            introMusic = new Music("mus1.mp3",true);
+            introMusic.start();
+
             soundButton.setIcon(resizedSoundImage);
         } else {
             Image noSoundImageScaled = noSoundImage.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
             ImageIcon resizedNoSoundImage = new ImageIcon(noSoundImageScaled);
             soundButton.setBorder(null);
+            introMusic.close();
             soundButton.setIcon(resizedNoSoundImage);
         }
     }
@@ -1591,30 +1606,10 @@ public class BeatClass extends JFrame implements ActionListener {
                     m4.add(custom);
                 }
             }
-            Collections.sort(m1, new Comparator<ScoreClass>() {
-                @Override
-                public int compare(ScoreClass c1, ScoreClass c2) {
-                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
-                }
-            });
-            Collections.sort(m2, new Comparator<ScoreClass>() {
-                @Override
-                public int compare(ScoreClass c1, ScoreClass c2) {
-                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
-                }
-            });
-            Collections.sort(m3, new Comparator<ScoreClass>() {
-                @Override
-                public int compare(ScoreClass c1, ScoreClass c2) {
-                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
-                }
-            });
-            Collections.sort(m4, new Comparator<ScoreClass>() {
-                @Override
-                public int compare(ScoreClass c1, ScoreClass c2) {
-                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
-                }
-            });
+            Collections.sort(m1);
+            Collections.sort(m2);
+            Collections.sort(m3);
+            Collections.sort(m4);
             songLabel.setText(MusicList.get(0).name);
             if(m1.size()>=1) {rankLabel1.setText("1. "+m1.get(0).scroe+"점 "+m1.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
             if(m1.size()>=2) {rankLabel2.setText("2. "+m1.get(1).scroe+"점 "+m1.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
@@ -1630,6 +1625,10 @@ public class BeatClass extends JFrame implements ActionListener {
         }
     }
     public void NextButtonClick(){
+        Collections.sort(m1);
+        Collections.sort(m2);
+        Collections.sort(m3);
+        Collections.sort(m4);
         rNum++;
         songLabel.setText(MusicList.get(rNum).name.split("\\.")[0]);
         prevButton.setVisible(true);
@@ -1680,6 +1679,10 @@ public class BeatClass extends JFrame implements ActionListener {
         }
     }
     public void PrevButtonClick(){
+        Collections.sort(m1);
+        Collections.sort(m2);
+        Collections.sort(m3);
+        Collections.sort(m4);
         rNum--;
         songLabel.setText(MusicList.get(rNum).name.split("\\.")[0]);
         nextButton.setVisible(true);
