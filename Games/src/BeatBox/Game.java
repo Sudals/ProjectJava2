@@ -2,6 +2,8 @@ package BeatBox;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game extends Thread{
     FrequencyAnalysis frequencyAnalysis;
@@ -21,14 +23,21 @@ public class Game extends Thread{
     public void screenDraw(Graphics2D g){
 
     }
+    public Timer timer = new Timer();
+    public TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            bc.EndWindows();
+        }
+    };
     @Override
-
     public void run(){
         dropNotes();
     }
     public void Press(int n){
         bc.effect.get(n).setVisible(true);
         bc.PressJMT(n);
+
     }
     public void Release(int n){
         bc.effect.get(n).setVisible(false);
@@ -69,8 +78,8 @@ public class Game extends Thread{
         }
         int s1=0,s2=0,s3=0,s4=0,s5=0,s6=0;
         int i = 0;
-        int t=1200;
-        while(true){
+        int t=1900;
+        while(beats.length-1!=i){
             //System.out.println(i);
             if(beats[i].time<=gameMusic.getTime()){
                 Note note = null;
@@ -129,7 +138,10 @@ public class Game extends Thread{
                 }
                 i++;
             }
+
         }
+        timer.schedule(task,5000);
+
     }
 
 }

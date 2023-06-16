@@ -1,17 +1,112 @@
 package BeatBox;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BeatClass extends JFrame implements ActionListener {
+    public class ScoreClass{
+        public String name;
+        public String music;
+        public int scroe;
+        public ScoreClass(String n, String m , int s){
+            name =n;
+            music=m;
+            scroe = s;
+        }
+    }
+    public List<ScoreClass> classList = new ArrayList<>();
+    JLabel songLabel;
+    public List<ScoreClass> ScoreRead(){
+        String filePath = "./data.json";
 
+        try {
+            File file = new File(filePath);
+            if (!file.exists() || file.length() == 0) {
+                System.out.println("파일이 비어있습니다.");
+                return new ArrayList<>();
+            }
+            // JSON 파일 읽기
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(filePath));
 
+            // JSON 배열을 객체 리스트로 변환
+            List<ScoreClass> classList = new ArrayList<>();
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                String name = (String) jsonObject.get("name");
+                String music = (String) jsonObject.get("music");
+                int score = ((Long) jsonObject.get("score")).intValue();
+                ScoreClass scoreClass = new ScoreClass(name, music, score);
+                classList.add(scoreClass);
+            }
+
+            // 클래스 리스트 출력 (예시로 출력만 함)
+            for (ScoreClass scoreClass : classList) {
+                System.out.println(scoreClass.name + " - " + scoreClass.music + " - " + scoreClass.scroe);
+            }
+            return classList;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (org.json.simple.parser.ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>();
+    }
+    public void ScoreSave(){
+
+        // 클래스 객체 생성 및 리스트에 추가
+        ScoreClass class1 = new ScoreClass(LocalDateTime.now().toString(), MusicList.get(selNum).name.split("\\.")[0],Score);
+        classList=ScoreRead();
+        classList.add(class1);
+
+        // JSON 배열 생성
+        JSONArray jsonArray = new JSONArray();
+
+        // 클래스 리스트를 JSON 객체로 변환하여 배열에 추가
+        for (ScoreClass myClass : classList) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", myClass.name);
+            jsonObject.put("music", myClass.music);
+            jsonObject.put("score",myClass.scroe);
+            jsonArray.add(jsonObject);
+        }
+
+        // JSON 파일 경로
+        String filePath = "./data.json";
+
+        try {
+            // 파일 쓰기
+            FileWriter fileWriter = new FileWriter(filePath);
+            fileWriter.write(jsonArray.toJSONString());
+            fileWriter.flush();
+            fileWriter.close();
+            System.out.println("JSON 파일이 성공적으로 생성되었습니다.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private ImageIcon homeImage;
     private ImageIcon rankhomeImage;
@@ -19,11 +114,14 @@ public class BeatClass extends JFrame implements ActionListener {
     private ImageIcon soundImage;
     private ImageIcon noSoundImage;
     private boolean isSoundOn;
-
+    public JButton applyButton;
 
 
     private JLabel loadingLabel;
     public int Score=0;
+    public int Exc=0;
+    public int GT=0;
+    public int BD = 0;
     private static final int LOADING_TIME = 10000;
 
     JButton menuButton, logoButton, startButton, settingButton, rankButton, quitButton, pause_ExitButton,pause_MenuButton, homeButton, rankhomeButton, gameBackbutton;
@@ -33,8 +131,19 @@ public class BeatClass extends JFrame implements ActionListener {
     public void setEscPressed(boolean pressed){
         escPressed = pressed;
     }
-
-
+    public static String nName;
+    public JComboBox<String> comboBox1;
+    public JComboBox<String> comboBox2;
+    public JComboBox<String> comboBox3;
+    public JComboBox<String> comboBox4;
+    public JComboBox<String> comboBox5;
+    public JComboBox<String> comboBox6;
+    public static String jc1="A";
+    public static String jc2="S";
+    public static String jc3="D";
+    public static String jc4="J";
+    public static String jc5="K";
+    public static String jc6="L";
 
     private void showLoadingScreen() {
         ImageIcon loadingIcon = new ImageIcon(getClass().getResource("images/loading2.gif"));
@@ -50,10 +159,31 @@ public class BeatClass extends JFrame implements ActionListener {
         loadingLabel.setBounds(loadingX, loadingY, loadingIcon.getIconWidth(), loadingIcon.getIconHeight());
         contentPanel.add(loadingLabel, "loadingScreen");
         cardLayout.show(contentPanel, "loadingScreen");
+        nName=MusicList.get(selNum).name.split("\\.")[0]+".wav";
+        switch(selNum){
+            case 0:
+                gifBackGround.setIcon(sd1);
+                endLabel.setIcon(sd1);
+                break;
+            case 1:
+                gifBackGround.setIcon(sd2);
+                endLabel.setIcon(sd2);
+                break;
+            case 2:
+                endLabel.setIcon(sd3);
+                gifBackGround.setIcon(sd3);
+                break;
+            case 3:
+                endLabel.setIcon(sd4);
+                gifBackGround.setIcon(sd4);
+                break;
+        }
+
         Timer timer = new Timer(LOADING_TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(contentPanel, "gameWindows");
+                StartWindows();
                 GameStart(MusicList.get(selNum).name.split("\\.")[0], "T", MusicList.get(selNum).name);
                 introMusic.close();
             }
@@ -63,7 +193,8 @@ public class BeatClass extends JFrame implements ActionListener {
     }
 
 
-
+    JButton nextButton;
+    JButton prevButton;
     public boolean isGamePanelActive() {
         return gamePanelActive;
     }
@@ -83,8 +214,16 @@ public class BeatClass extends JFrame implements ActionListener {
     public CardLayout getCardLayout() {
         return cardLayout;
     }
-
-
+    JLabel rankLabel1;
+    JLabel rankLabel2;
+    JLabel rankLabel3;
+    JLabel rankLabel4;
+    JLabel rankLabel5;
+    JLabel rankLabel6;
+    JLabel rankLabel7;
+    JLabel rankLabel8;
+    JLabel rankLabel9;
+    JLabel rankLabel10;
     private BeatClass beatClass;
 
     private Image screenImage;
@@ -116,6 +255,14 @@ public class BeatClass extends JFrame implements ActionListener {
     JPanel gamePanel;
 
     JLabel gameLabel;
+
+    JPanel endPanel;
+    JButton endButton;
+    JLabel endLabel;
+    JLabel endScore;
+    JLabel endBad;
+    JLabel endGT;
+    JLabel endExc;
     JLabel gifBackGround;
 
     JLabel mtextLabel;
@@ -145,7 +292,10 @@ public class BeatClass extends JFrame implements ActionListener {
     java.util.List<Note> noteList4 = new CopyOnWriteArrayList<>();
     java.util.List<Note> noteList5 = new CopyOnWriteArrayList<>();
     java.util.List<Note> noteList6 = new CopyOnWriteArrayList<>();
-
+    ImageIcon sd1;
+    ImageIcon sd2;
+    ImageIcon sd3;
+    ImageIcon sd4;
     private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage();
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -173,9 +323,6 @@ public class BeatClass extends JFrame implements ActionListener {
 
     private KeyListener keyListener;
     public  BeatClass(){
-
-
-
 
 
 
@@ -252,13 +399,6 @@ public class BeatClass extends JFrame implements ActionListener {
         backgroundImageLabel.add(pause_MenuButton);
 
 
-
-
-
-
-
-
-
         MusicList.add(new SoundPack("Avicii - Levels.mp3","s_Levels.jpg"));
         MusicList.add(new SoundPack("Avicii - The Nights.mp3","s_TheNights.jpg"));
         MusicList.add(new SoundPack("David Guetta - Without You.mp3","s_Without You.jpg"));
@@ -279,6 +419,8 @@ public class BeatClass extends JFrame implements ActionListener {
         mainPanel = new JPanel(new BorderLayout());
         gamePanel = new JPanel(new BorderLayout());
         rankPanel = new JPanel(new BorderLayout());
+        endPanel = new JPanel(new BorderLayout());
+        endPanel.setSize(900,600);
         settingPanel.setSize(900,600);;
         rankPanel.setSize(900,600);;
         gamePanel.setSize(900,600);;
@@ -298,16 +440,65 @@ public class BeatClass extends JFrame implements ActionListener {
 
         gifBackGround=new JLabel();
 
-        ImageIcon sd =new ImageIcon(this.getClass().getResource("images/v1.gif"));
+        sd1 =new ImageIcon(this.getClass().getResource("images/v1.gif"));
+        sd2 = new ImageIcon(this.getClass().getResource("images/g1.gif"));
+        sd3 = new ImageIcon(this.getClass().getResource("images/g2.gif"));
+        sd4 = new ImageIcon(this.getClass().getResource("images/g3.gif"));
+        gifBackGround.setIcon(sd1);
+        //ImageIcon icon = new ImageIcon("../images/MainWallpaper.png");
+        endPanel = new JPanel(null);
+        endLabel = new JLabel(new ImageIcon(getClass().getResource("images/v1.gif")));
+        endScore = new JLabel(Score+"점");
+        endScore.setBounds(500,160,300,80);
+        endScore.setForeground(Color.WHITE);
+        Font songLabelFon = endScore.getFont();
+        endScore.setFont(songLabelFon.deriveFont(30f));
+        endExc = new JLabel(Exc+"회");
+        endExc.setBounds(500,250,300,80);
+        endExc.setForeground(Color.WHITE);
+        Font songLabelFon1 = endExc.getFont();
+        endExc.setFont(songLabelFon1.deriveFont(30f));
+        endGT=new JLabel(GT+"회");
+        endGT.setBounds(500,340,300,80);
+        endGT.setForeground(Color.WHITE);
+        Font songLabelFon2 = endGT.getFont();
+        endGT.setFont(songLabelFon2.deriveFont(30f));
+        endBad= new JLabel(BD+"회");
+        endBad.setBounds(500,430,300,80);
+        endBad.setForeground(Color.WHITE);
+        Font songLabelFon3 = endBad.getFont();
+        endBad.setFont(songLabelFon3.deriveFont(30f));
+        endLabel.setBounds(0,0,900,600);
+        JLabel endScorep = new JLabel(new ImageIcon(getClass().getResource("images/score.png")));
+        endScorep.setBounds(200,150,300,80);
+        JLabel endbad = new JLabel(new ImageIcon(getClass().getResource("images/BAD2.png")));
+        endbad.setBounds(200,420,300,80);
+        JLabel endGreat = new JLabel(new ImageIcon(getClass().getResource("images/GREAT2.png")));
+        endGreat.setBounds(200,330,300,80);
+        JLabel endEx = new JLabel(new ImageIcon(getClass().getResource("images/EXCELLENT2.png")));
+        endEx.setBounds(200,240,300,80);
+        endPanel.add(endLabel);
+        endButton = new JButton("확인");
+        endButton.setBounds(400, 500, 80, 30);
+        endButton.addActionListener(this);
+        endLabel.add(endButton);
+        endLabel.add(endbad);
+        endLabel.add(endGreat);
+        endLabel.add(endEx);
+        endLabel.add(endExc);
+        endLabel.add(endGT);
+        endLabel.add(endBad);
 
-        gifBackGround.setIcon(sd);
-        ImageIcon icon = new ImageIcon("../images/MainWallpaper.png");
-
-
-
-
+        endScore.setVisible(true);
+        endExc.setVisible(true);
+        endBad.setVisible(true);
+        endGT.setVisible(true);
+        endLabel.add(endScorep);
+        endLabel.add(endScore);
         gameLabel=new JLabel();
         gameLabel.setIcon(im);
+        contentPanel.add(endPanel,"endPanel");
+
         for(int i = 0;i<6;i++){
             Image lo = new ImageIcon(getClass().getResource("images/effectPanel.png")).getImage();
             effectPanel.add(new JLabel(new ImageIcon(lo.getScaledInstance(100,500,Image.SCALE_SMOOTH))));
@@ -322,9 +513,9 @@ public class BeatClass extends JFrame implements ActionListener {
         }
         rankPanel = new JPanel(null);
         rankLabel = new JLabel(new ImageIcon(getClass().getResource("images/MainWallpaper.png")));
-        rankLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         rankLabel.setBounds(0, 0, 900, 560);
         rankPanel.add(rankLabel);
+
         ImageIcon rankhomeImage = new ImageIcon(getClass().getResource("images/homebutton.png"));
         Image homeimage = rankhomeImage.getImage();
         Image homescaledImage = homeimage.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -370,10 +561,11 @@ public class BeatClass extends JFrame implements ActionListener {
         ImageIcon leftArrowIcon = new ImageIcon(getClass().getResource("images/leftArrow.png"));
         Image leftArrowImage = leftArrowIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         ImageIcon resizedLeftArrowIcon = new ImageIcon(leftArrowImage);
-        JButton prevButton = new JButton(resizedLeftArrowIcon);
+        prevButton = new JButton(resizedLeftArrowIcon);
         prevButton.setBounds(50, 250, 70, 70);
         prevButton.setContentAreaFilled(false); // 이미지 배경 없애기
         prevButton.setBorder(null);
+        prevButton.addActionListener(this);
         rankLabel.add(prevButton);
         prevButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -406,10 +598,11 @@ public class BeatClass extends JFrame implements ActionListener {
         ImageIcon rightArrowIcon = new ImageIcon(getClass().getResource("images/rightArrow.png"));
         Image rightArrowImage = rightArrowIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         ImageIcon resizedRightArrowIcon = new ImageIcon(rightArrowImage);
-        JButton nextButton = new JButton(resizedRightArrowIcon);
+        nextButton = new JButton(resizedRightArrowIcon);
         nextButton.setBounds(770, 250, 70, 70);
         nextButton.setContentAreaFilled(false);
         nextButton.setBorder(null);
+        nextButton.addActionListener(this);
         rankLabel.add(nextButton);
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -439,7 +632,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
 
         // 텍스트 라벨 생성
-        JLabel songLabel = new JLabel("[노래이름]");
+        songLabel = new JLabel("[노래이름]");
         songLabel.setBounds(400, 60, 200, 30);
 
         songLabel.setForeground(Color.WHITE);
@@ -454,70 +647,70 @@ public class BeatClass extends JFrame implements ActionListener {
         int labelGap = 40; // 간격
 
 
-        JLabel rankLabel1 = new JLabel("1. 이름 - 점수");
+        rankLabel1 = new JLabel("1. 이름 - 점수");
         rankLabel1.setBounds(400, 150, labelWidth, labelHeight);
         rankLabel1.setForeground(Color.WHITE);
         Font rankLabel1Font = rankLabel1.getFont();
         rankLabel1.setFont(rankLabel1Font.deriveFont(15f));
         rankLabel.add(rankLabel1);
 
-        JLabel rankLabel2 = new JLabel("2. 이름 - 점수");
+        rankLabel2 = new JLabel("2. 이름 - 점수");
         rankLabel2.setBounds(400, 190, labelWidth, labelHeight);
         rankLabel2.setForeground(Color.WHITE);
         Font rankLabel2Font = rankLabel2.getFont();
         rankLabel2.setFont(rankLabel2Font.deriveFont(15f));
         rankLabel.add(rankLabel2);
 
-        JLabel rankLabel3 = new JLabel("3. 이름 - 점수");
+        rankLabel3 = new JLabel("3. 이름 - 점수");
         rankLabel3.setBounds(400, 230, labelWidth, labelHeight);
         rankLabel3.setForeground(Color.WHITE);
         Font rankLabel3Font = rankLabel3.getFont();
         rankLabel3.setFont(rankLabel3Font.deriveFont(15f));
         rankLabel.add(rankLabel3);
 
-        JLabel rankLabel4 = new JLabel("4. 이름 - 점수");
+        rankLabel4 = new JLabel("4. 이름 - 점수");
         rankLabel4.setBounds(400, 270, labelWidth, labelHeight);
         rankLabel4.setForeground(Color.WHITE);
         Font rankLabel4Font = rankLabel4.getFont();
         rankLabel4.setFont(rankLabel4Font.deriveFont(15f));
         rankLabel.add(rankLabel4);
 
-        JLabel rankLabel5 = new JLabel("5. 이름 - 점수");
+        rankLabel5 = new JLabel("5. 이름 - 점수");
         rankLabel5.setBounds(400, 310, labelWidth, labelHeight);
         rankLabel5.setForeground(Color.WHITE);
         Font rankLabel5Font = rankLabel5.getFont();
         rankLabel5.setFont(rankLabel5Font.deriveFont(15f));
         rankLabel.add(rankLabel5);
 
-        JLabel rankLabel6 = new JLabel("6. 이름 - 점수");
+        rankLabel6 = new JLabel("6. 이름 - 점수");
         rankLabel6.setBounds(400, 350, labelWidth, labelHeight);
         rankLabel6.setForeground(Color.WHITE);
         Font rankLabel6Font = rankLabel6.getFont();
         rankLabel6.setFont(rankLabel6Font.deriveFont(15f));
         rankLabel.add(rankLabel6);
 
-        JLabel rankLabel7 = new JLabel("7. 이름 - 점수");
+        rankLabel7 = new JLabel("7. 이름 - 점수");
         rankLabel7.setBounds(400, 390, labelWidth, labelHeight);
         rankLabel7.setForeground(Color.WHITE);
         Font rankLabel7Font = rankLabel7.getFont();
         rankLabel7.setFont(rankLabel7Font.deriveFont(15f));
         rankLabel.add(rankLabel7);
 
-        JLabel rankLabel8 = new JLabel("8. 이름 - 점수");
+        rankLabel8 = new JLabel("8. 이름 - 점수");
         rankLabel8.setBounds(400, 430, labelWidth, labelHeight);
         rankLabel8.setForeground(Color.WHITE);
         Font rankLabel8Font = rankLabel8.getFont();
         rankLabel8.setFont(rankLabel8Font.deriveFont(15f));
         rankLabel.add(rankLabel8);
 
-        JLabel rankLabel9 = new JLabel("9. 이름 - 점수");
+        rankLabel9 = new JLabel("9. 이름 - 점수");
         rankLabel9.setBounds(400, 470, labelWidth, labelHeight);
         rankLabel9.setForeground(Color.WHITE);
         Font rankLabel9Font = rankLabel9.getFont();
         rankLabel9.setFont(rankLabel9Font.deriveFont(15f));
         rankLabel.add(rankLabel9);
 
-        JLabel rankLabel10 = new JLabel("10. 이름 - 점수");
+        rankLabel10 = new JLabel("10. 이름 - 점수");
         rankLabel10.setBounds(400, 510, labelWidth, labelHeight);
         rankLabel10.setForeground(Color.WHITE);
         Font rankLabel10Font = rankLabel10.getFont();
@@ -532,7 +725,6 @@ public class BeatClass extends JFrame implements ActionListener {
 
         settingPanel = new JPanel(null);
         settingLabel = new JLabel(new ImageIcon(getClass().getResource("images/MainWallpaper.png")));
-        settingLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         settingLabel.setBounds(0, 0, 900, 560);
         settingPanel.add(settingLabel);
 
@@ -572,7 +764,7 @@ public class BeatClass extends JFrame implements ActionListener {
             }
         });
         soundImage = new ImageIcon(getClass().getResource("images/unMute.png"));
-        noSoundImage = new ImageIcon(getClass().getResource("images/mute.png"));
+        noSoundImage = new ImageIcon(getClass().getResource("images/Mute.png"));
         isSoundOn = true;
         soundButton = new JButton(soundImage);
         int buttonSize = 150;
@@ -599,56 +791,69 @@ public class BeatClass extends JFrame implements ActionListener {
 
         String[] comboBoxLabels = {"KEY 1 SETTING", "KEY 2 SETTING", "KEY 3 SETTING", "KEY 4 SETTING", "KEY 5 SETTING", "KEY 6 SETTING"};
 
-        JComboBox<String> comboBox1 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox1 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox1.setBounds(350, 150, 200, 30);
+        comboBox1.setSelectedItem("A");
         settingLabel.add(comboBox1);
         JLabel comboBoxLabel1 = new JLabel(comboBoxLabels[0]);
         comboBoxLabel1.setBounds(350, 120, 200, 30);
         comboBoxLabel1.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel1);
 
-        JComboBox<String> comboBox2 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox2 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox2.setBounds(350, 210, 200, 30);
+        comboBox2.setSelectedItem("S");
         settingLabel.add(comboBox2);
         JLabel comboBoxLabel2 = new JLabel(comboBoxLabels[1]);
         comboBoxLabel2.setBounds(350, 180, 200, 30);
         comboBoxLabel2.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel2);
 
-        JComboBox<String> comboBox3 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+         comboBox3 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox3.setBounds(350, 270, 200, 30);
+        comboBox3.setSelectedItem("D");
         settingLabel.add(comboBox3);
         JLabel comboBoxLabel3 = new JLabel(comboBoxLabels[2]);
         comboBoxLabel3.setBounds(350, 240, 200, 30);
         comboBoxLabel3.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel3);
 
-        JComboBox<String> comboBox4 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+         comboBox4 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox4.setBounds(350, 330, 200, 30);
+        comboBox4.setSelectedItem("J");
         settingLabel.add(comboBox4);
         JLabel comboBoxLabel4 = new JLabel(comboBoxLabels[3]);
         comboBoxLabel4.setBounds(350, 300, 200, 30);
         comboBoxLabel4.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel4);
 
-        JComboBox<String> comboBox5 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+         comboBox5 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox5.setBounds(350, 390, 200, 30);
+        comboBox5.setSelectedItem("K");
         settingLabel.add(comboBox5);
         JLabel comboBoxLabel5 = new JLabel(comboBoxLabels[4]);
         comboBoxLabel5.setBounds(350, 360, 200, 30);
         comboBoxLabel5.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel5);
 
-        JComboBox<String> comboBox6 = new JComboBox<>(new String[]{"Key 1", "Key 2", "Key 3", "Key 4", "Key 5", "Key 6"});
+        comboBox6 = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"});
         comboBox6.setBounds(350, 450, 200, 30);
+        comboBox6.setSelectedItem("L");
         settingLabel.add(comboBox6);
         JLabel comboBoxLabel6 = new JLabel(comboBoxLabels[5]);
         comboBoxLabel6.setBounds(350, 420, 200, 30);
         comboBoxLabel6.setForeground(Color.WHITE);
         settingLabel.add(comboBoxLabel6);
 
-        JButton applyButton = new JButton("APPLY");
+        applyButton = new JButton("APPLY");
         applyButton.setBounds(750, 500, 80, 30);
+        applyButton.addActionListener(this);
         settingLabel.add(applyButton);
 
         String[] effectOptions = {"EFFECT 1", "EFFECT 2", "EFFECT 3", "EFFECT 4", "EFFECT 5", "EFFECT 6"};
@@ -671,9 +876,9 @@ public class BeatClass extends JFrame implements ActionListener {
 
 
         bgLabel = new JLabel(new ImageIcon(getClass().getResource("images/main.gif")));
-        bgLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+
         bgLabel2 = new JLabel(new ImageIcon(getClass().getResource("images/MainWallpaper.png")));
-        bgLabel2.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+
         // 
         gifBackGround.setBounds(0,0,getWidth(),getHeight());
         gameLabel.setBounds(0,0,getWidth(),getHeight());
@@ -1062,6 +1267,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
         introMusic = new Music("mus1.mp3",true);
         introMusic.start();
+        //cardLayout.show(contentPanel,"endPanel");
     }
 
 
@@ -1081,7 +1287,14 @@ public class BeatClass extends JFrame implements ActionListener {
         }
     }
 
-
+    public void SetSettings(){
+        jc1=comboBox1.getSelectedItem().toString();
+        jc2=comboBox2.getSelectedItem().toString();
+        jc3=comboBox3.getSelectedItem().toString();
+        jc4=comboBox4.getSelectedItem().toString();
+        jc5=comboBox5.getSelectedItem().toString();
+        jc6=comboBox6.getSelectedItem().toString();
+    }
 
     public ImageIcon LoadImage(String name){
         ImageIcon icon = new ImageIcon(getClass().getResource("images/"+name));
@@ -1143,6 +1356,18 @@ public class BeatClass extends JFrame implements ActionListener {
 
     }
 
+    public void EndWindows(){
+        endBad.setText(BD+"회");
+        endGT.setText(GT+"회");
+        endExc.setText(Exc+"회");
+        endScore.setText(Score+"점");
+        cardLayout.show(contentPanel,"endPanel");
+    }
+    public void StartWindows(){
+        BD=0;
+        GT=0;
+        Exc=0;
+    }
     public void PressJMT(int i){
         Note nt=null;
         switch(i){
@@ -1151,10 +1376,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList1){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1162,10 +1391,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList2){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1173,10 +1406,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList3){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1184,10 +1421,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList4){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1195,10 +1436,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList5){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1206,10 +1451,14 @@ public class BeatClass extends JFrame implements ActionListener {
                 for(Note n :noteList6){
                     if(n.set==1) {
                         Score+=50;
+                        GT++;
                         RemoveNote(i,n);
                     }else if(n.set ==2){
                         Score+=100;
+                        Exc++;
                         RemoveNote(i,n);
+                    }else if(n.set==0){
+                        BD++;
                     }
                 }
                 break;
@@ -1308,14 +1557,190 @@ public class BeatClass extends JFrame implements ActionListener {
 
         gamePanelActive = true; // gamePanel이 켜진 상태로 설정
     }
+    int rNum=0;
+    List<ScoreClass> m1=new ArrayList<>();
+    List<ScoreClass> m2=new ArrayList<>();
+    List<ScoreClass> m3=new ArrayList<>();
+    List<ScoreClass> m4=new ArrayList<>();
+    public void Rank(){
+        classList = ScoreRead();
+        if(classList.size()==0){
+            songLabel.setText(MusicList.get(0).name);
+            rankLabel1.setText("1. 기록 없음");
+            rankLabel2.setText("2. 기록 없음");
+            rankLabel3.setText("3. 기록 없음");
+            rankLabel4.setText("4. 기록 없음");
+            rankLabel5.setText("5. 기록 없음");
+            rankLabel6.setText("6. 기록 없음");
+            rankLabel7.setText("7. 기록 없음");
+            rankLabel8.setText("8. 기록 없음");
+            rankLabel9.setText("9. 기록 없음");
+            rankLabel10.setText("10. 기록 없음");
+            return;
+        }else{
+
+            int i = 0;
+            for(ScoreClass custom : classList){
+                if(custom.music.equals(MusicList.get(0).name.split("\\.")[0])){
+                    m1.add(custom);
+                }else if(custom.music.equals(MusicList.get(1).name.split("\\.")[0])) {
+                    m2.add(custom);
+                }else if(custom.music.equals(MusicList.get(2).name.split("\\.")[0])){
+                    m3.add(custom);
+                }else if(custom.music.equals(MusicList.get(3).name.split("\\.")[0])){
+                    m4.add(custom);
+                }
+            }
+            Collections.sort(m1, new Comparator<ScoreClass>() {
+                @Override
+                public int compare(ScoreClass c1, ScoreClass c2) {
+                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
+                }
+            });
+            Collections.sort(m2, new Comparator<ScoreClass>() {
+                @Override
+                public int compare(ScoreClass c1, ScoreClass c2) {
+                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
+                }
+            });
+            Collections.sort(m3, new Comparator<ScoreClass>() {
+                @Override
+                public int compare(ScoreClass c1, ScoreClass c2) {
+                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
+                }
+            });
+            Collections.sort(m4, new Comparator<ScoreClass>() {
+                @Override
+                public int compare(ScoreClass c1, ScoreClass c2) {
+                    return (c1.scroe>c2.scroe) ? c1.scroe : c2.scroe;
+                }
+            });
+            songLabel.setText(MusicList.get(0).name);
+            if(m1.size()>=1) {rankLabel1.setText("1. "+m1.get(0).scroe+"점 "+m1.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+            if(m1.size()>=2) {rankLabel2.setText("2. "+m1.get(1).scroe+"점 "+m1.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+            if(m1.size()>=3) {rankLabel3.setText("3. "+m1.get(2).scroe+"점 "+m1.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+            if(m1.size()>=4) {rankLabel4.setText("4. "+m1.get(3).scroe+"점 "+m1.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+            if(m1.size()>=5) {rankLabel5.setText("5. "+m1.get(4).scroe+"점 "+m1.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+            if(m1.size()>=6) {rankLabel6.setText("6. "+m1.get(5).scroe+"점 "+m1.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+            if(m1.size()>=7) {rankLabel7.setText("7. "+m1.get(6).scroe+"점 "+m1.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+            if(m1.size()>=8) {rankLabel8.setText("8. "+m1.get(7).scroe+"점 "+m1.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+            if(m1.size()>=9) {rankLabel9.setText("9. "+m1.get(8).scroe+"점 "+m1.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+            if(m1.size()>=10) {rankLabel10.setText("10. "+m1.get(9).scroe+"점 "+m1.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+            prevButton.setVisible(false);
+        }
+    }
+    public void NextButtonClick(){
+        rNum++;
+        songLabel.setText(MusicList.get(rNum).name.split("\\.")[0]);
+        prevButton.setVisible(true);
+        if(rNum==3){
+            nextButton.setVisible(false);
+        }
+        switch (rNum){
+            case 1:
+                songLabel.setText(MusicList.get(1).name.split("\\.")[0]);
+                if(m2.size()>=1) {rankLabel1.setText("1. "+m2.get(0).scroe+"점 "+m2.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m2.size()>=2) {rankLabel2.setText("2. "+m2.get(1).scroe+"점 "+m2.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m2.size()>=3) {rankLabel3.setText("3. "+m2.get(2).scroe+"점 "+m2.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m2.size()>=4) {rankLabel4.setText("4. "+m2.get(3).scroe+"점 "+m2.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m2.size()>=5) {rankLabel5.setText("5. "+m2.get(4).scroe+"점 "+m2.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m2.size()>=6) {rankLabel6.setText("6. "+m2.get(5).scroe+"점 "+m2.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m2.size()>=7) {rankLabel7.setText("7. "+m2.get(6).scroe+"점 "+m2.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m2.size()>=8) {rankLabel8.setText("8. "+m2.get(7).scroe+"점 "+m2.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m2.size()>=9) {rankLabel9.setText("9. "+m2.get(8).scroe+"점 "+m2.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m2.size()>=10) {rankLabel10.setText("10. "+m2.get(9).scroe+"점 "+m2.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+            case 2:
+                songLabel.setText(MusicList.get(2).name.split("\\.")[0]);
+
+                if(m3.size()>=1) {rankLabel1.setText("1. "+m3.get(0).scroe+"점 "+m3.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m3.size()>=2) {rankLabel2.setText("2. "+m3.get(1).scroe+"점 "+m3.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m3.size()>=3) {rankLabel3.setText("3. "+m3.get(2).scroe+"점 "+m3.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m3.size()>=4) {rankLabel4.setText("4. "+m3.get(3).scroe+"점 "+m3.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m3.size()>=5) {rankLabel5.setText("5. "+m3.get(4).scroe+"점 "+m3.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m3.size()>=6) {rankLabel6.setText("6. "+m3.get(5).scroe+"점 "+m3.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m3.size()>=7) {rankLabel7.setText("7. "+m3.get(6).scroe+"점 "+m3.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m3.size()>=8) {rankLabel8.setText("8. "+m3.get(7).scroe+"점 "+m3.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m3.size()>=9) {rankLabel9.setText("9. "+m3.get(8).scroe+"점 "+m3.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m3.size()>=10) {rankLabel10.setText("10. "+m3.get(9).scroe+"점 "+m3.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+            case 3:
+                songLabel.setText(MusicList.get(3).name.split("\\.")[0]);
+                if(m4.size()>=1) {rankLabel1.setText("1. "+m4.get(0).scroe+"점 "+m4.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m4.size()>=2) {rankLabel2.setText("2. "+m4.get(1).scroe+"점 "+m4.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m4.size()>=3) {rankLabel3.setText("3. "+m4.get(2).scroe+"점 "+m4.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m4.size()>=4) {rankLabel4.setText("4. "+m4.get(3).scroe+"점 "+m4.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m4.size()>=5) {rankLabel5.setText("5. "+m4.get(4).scroe+"점 "+m4.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m4.size()>=6) {rankLabel6.setText("6. "+m4.get(5).scroe+"점 "+m4.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m4.size()>=7) {rankLabel7.setText("7. "+m4.get(6).scroe+"점 "+m4.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m4.size()>=8) {rankLabel8.setText("8. "+m4.get(7).scroe+"점 "+m4.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m4.size()>=9) {rankLabel9.setText("9. "+m4.get(8).scroe+"점 "+m4.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m4.size()>=10) {rankLabel10.setText("10. "+m4.get(9).scroe+"점 "+m4.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+        }
+    }
+    public void PrevButtonClick(){
+        rNum--;
+        songLabel.setText(MusicList.get(rNum).name.split("\\.")[0]);
+        nextButton.setVisible(true);
+        if(rNum==0){
+            prevButton.setVisible(false);
+        }
+        switch (rNum){
+            case 0:
+                songLabel.setText(MusicList.get(0).name.split("\\.")[0]);
+                if(m1.size()>=1) {rankLabel1.setText("1. "+m1.get(0).scroe+"점 "+m1.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m1.size()>=2) {rankLabel2.setText("2. "+m1.get(1).scroe+"점 "+m1.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m1.size()>=3) {rankLabel3.setText("3. "+m1.get(2).scroe+"점 "+m1.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m1.size()>=4) {rankLabel4.setText("4. "+m1.get(3).scroe+"점 "+m1.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m1.size()>=5) {rankLabel5.setText("5. "+m1.get(4).scroe+"점 "+m1.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m1.size()>=6) {rankLabel6.setText("6. "+m1.get(5).scroe+"점 "+m1.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m1.size()>=7) {rankLabel7.setText("7. "+m1.get(6).scroe+"점 "+m1.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m1.size()>=8) {rankLabel8.setText("8. "+m1.get(7).scroe+"점 "+m1.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m1.size()>=9) {rankLabel9.setText("9. "+m1.get(8).scroe+"점 "+m1.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m1.size()>=10) {rankLabel10.setText("10. "+m1.get(9).scroe+"점 "+m1.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+            case 1:
+                songLabel.setText(MusicList.get(1).name.split("\\.")[0]);
+                if(m2.size()>=1) {rankLabel1.setText("1. "+m2.get(0).scroe+"점 "+m2.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m2.size()>=2) {rankLabel2.setText("2. "+m2.get(1).scroe+"점 "+m2.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m2.size()>=3) {rankLabel3.setText("3. "+m2.get(2).scroe+"점 "+m2.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m2.size()>=4) {rankLabel4.setText("4. "+m2.get(3).scroe+"점 "+m2.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m2.size()>=5) {rankLabel5.setText("5. "+m2.get(4).scroe+"점 "+m2.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m2.size()>=6) {rankLabel6.setText("6. "+m2.get(5).scroe+"점 "+m2.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m2.size()>=7) {rankLabel7.setText("7. "+m2.get(6).scroe+"점 "+m2.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m2.size()>=8) {rankLabel8.setText("8. "+m2.get(7).scroe+"점 "+m2.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m2.size()>=9) {rankLabel9.setText("9. "+m2.get(8).scroe+"점 "+m2.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m2.size()>=10) {rankLabel10.setText("10. "+m2.get(9).scroe+"점 "+m2.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+            case 2:
+                songLabel.setText(MusicList.get(2).name.split("\\.")[0]);
+                if(m3.size()>=1) {rankLabel1.setText("1. "+m3.get(0).scroe+"점 "+m3.get(0).name);}else{rankLabel1.setText("1. 기록 없음");}
+                if(m3.size()>=2) {rankLabel2.setText("2. "+m3.get(1).scroe+"점 "+m3.get(1).name);}else{rankLabel2.setText("2. 기록 없음");}
+                if(m3.size()>=3) {rankLabel3.setText("3. "+m3.get(2).scroe+"점 "+m3.get(2).name);}else{rankLabel3.setText("3. 기록 없음");}
+                if(m3.size()>=4) {rankLabel4.setText("4. "+m3.get(3).scroe+"점 "+m3.get(3).name);}else{rankLabel4.setText("4. 기록 없음");}
+                if(m3.size()>=5) {rankLabel5.setText("5. "+m3.get(4).scroe+"점 "+m3.get(4).name);}else{rankLabel5.setText("5. 기록 없음");}
+                if(m3.size()>=6) {rankLabel6.setText("6. "+m3.get(5).scroe+"점 "+m3.get(5).name);}else{rankLabel6.setText("6. 기록 없음");}
+                if(m3.size()>=7) {rankLabel7.setText("7. "+m3.get(6).scroe+"점 "+m3.get(6).name);}else{rankLabel7.setText("7. 기록 없음");}
+                if(m3.size()>=8) {rankLabel8.setText("8. "+m3.get(7).scroe+"점 "+m3.get(7).name);}else{rankLabel8.setText("8. 기록 없음");}
+                if(m3.size()>=9) {rankLabel9.setText("9. "+m3.get(8).scroe+"점 "+m3.get(8).name);}else{rankLabel9.setText("9. 기록 없음");}
+                if(m3.size()>=10) {rankLabel10.setText("10. "+m3.get(9).scroe+"점 "+m3.get(9).name);}else{rankLabel10.setText("10. 기록 없음");}
+                break;
+        }
+    }
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == startButton) {
             //System.exit(0);
             cardLayout.show(contentPanel,"selectWindows");
-        } else if (e.getSource() == settingButton) {
+        }else if(e.getSource()==endButton){
+            ScoreSave();
+            cardLayout.show(contentPanel,"selectWindows");
+        }
+        else if (e.getSource() == settingButton) {
             cardLayout.show(contentPanel, "settingWindows");
         } else if (e.getSource() == rankButton) {
+            Rank();
             cardLayout.show(contentPanel, "rankWindows");
         } else if (e.getSource() == quitButton) {
             // Quit
@@ -1330,7 +1755,12 @@ public class BeatClass extends JFrame implements ActionListener {
         else if(e.getSource() == rankhomeButton){
             cardLayout.show(contentPanel,"mainWindows");
         }else if(e.getSource() == gameBackbutton){
+            game.close();
             cardLayout.show(contentPanel,"selectWindows");
+        }else if(e.getSource()==nextButton){
+            NextButtonClick();
+        }else if(e.getSource()==prevButton){
+            PrevButtonClick();
         }
 
         else if(e.getSource() == menuButton){
@@ -1344,10 +1774,9 @@ public class BeatClass extends JFrame implements ActionListener {
             SelectWindowsImageSetting(selNum-1,selNum,selNum+1);
         }else if(e.getSource()==bgList){
             showLoadingScreen();
+        }else if(e.getSource()==applyButton);
+            SetSettings();
         }
-        }
-    }
-
-
+}
 
 

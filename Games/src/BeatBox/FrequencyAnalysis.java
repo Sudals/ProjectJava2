@@ -13,8 +13,9 @@ public class FrequencyAnalysis {
         try {
             onsets.clear();
             times.clear();
+            System.out.println(BeatClass.nName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
-                    getClass().getResource("Avicii-Levels.wav"));
+                    getClass().getResource(BeatClass.nName));
             AudioFormat format = audioInputStream.getFormat();
             int numChannels = format.getChannels();
             float sampleRate = format.getSampleRate();
