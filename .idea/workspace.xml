@@ -14,23 +14,9 @@
       <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/Note.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$ScoreClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$ScoreClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$SoundPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$SoundPlayer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" afterDir="false" />

@@ -79,7 +79,7 @@ public class Game extends Thread{
         }
         int s1=0,s2=0,s3=0,s4=0,s5=0,s6=0;
         int i = 0;
-        int t=1900;
+        int t=2500;
         while(beats.length-1!=i){
             //System.out.println(i);
             if(beats[i].time<=gameMusic.getTime()){

@@ -90,7 +90,7 @@ public class BeatClass extends JFrame implements ActionListener {
         }
         return new ArrayList<>();
     }
-    public String musicName;
+    public static String musicName;
     public void ScoreSave() {
 
         // 클래스 객체 생성 및 리스트에 추가
@@ -348,7 +348,7 @@ public class BeatClass extends JFrame implements ActionListener {
 
 
     private KeyListener keyListener;
-
+    JFrame frame;
     public BeatClass() {
 
 
@@ -434,7 +434,7 @@ public class BeatClass extends JFrame implements ActionListener {
         selNum = MusicList.size() / 2;
         endNum = MusicList.size() - 1;
         startNum = 0;
-        JFrame frame = new JFrame("Image Scaling Example");
+        frame = new JFrame("Image Scaling Example");
         keyListener = new KeyListener(this,musicName);
         frame.addKeyListener(keyListener);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -456,7 +456,7 @@ public class BeatClass extends JFrame implements ActionListener {
         ;
         gamePanel.setSize(900, 600);
         ;
-        frame.addKeyListener(new KeyListener(beatClass,musicName));
+        //frame.addKeyListener(new KeyListener(beatClass,musicName));
         frame.setFocusable(true);
         frame.requestFocus();
         cardLayout = new CardLayout();
@@ -1396,25 +1396,27 @@ public class BeatClass extends JFrame implements ActionListener {
         jc5 = comboBox5.getSelectedItem().toString();
         jc6 = comboBox6.getSelectedItem().toString();
         switch(effectComboBox.getSelectedItem().toString()){
-            case "Effect 1":
+            case "EFFECT 1":
                 musicName="Resources/button.wav";
                 break;
-            case "Effect 2":
+            case "EFFECT 2":
                 musicName="Resources/notepadSound.wav";
                 break;
-            case "Effect 3":
+            case "EFFECT 3":
                 musicName="Resources/notepadSound2.wav";
+                System.out.println("ASDASDAS");
                 break;
-            case "Effect 4":
+            case "EFFECT 4":
                 musicName="Resources/notepadSound3.wav";
                 break;
-            case "Effect 5":
+            case "EFFECT 5":
                 musicName="Resources/notepadSound4.wav";
                 break;
-            case "Effect 6":
+            case "EFFECT 6":
                 musicName="Resources/notepadSound5.wav";
                 break;
         }
+        keyListener.SoundSet(musicName);
     }
 
     public ImageIcon LoadImage(String name) {
@@ -1489,6 +1491,7 @@ public class BeatClass extends JFrame implements ActionListener {
     }
 
     public void StartWindows() {
+
         BD = 0;
         GT = 0;
         Exc = 0;

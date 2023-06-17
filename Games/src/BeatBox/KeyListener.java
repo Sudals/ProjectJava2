@@ -17,7 +17,7 @@ public class KeyListener extends KeyAdapter {
         try {
             // 효과음 파일 로드
             soundClip = AudioSystem.getClip();
-            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(str)));
+            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(beatClass.musicName)));
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
@@ -27,8 +27,10 @@ public class KeyListener extends KeyAdapter {
     public void SoundSet(String str)  {
         try {
             // 효과음 파일 로드
+
             soundClip = AudioSystem.getClip();
-            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(str)));
+            soundClip.open(AudioSystem.getAudioInputStream(Main.class.getResource(beatClass.musicName)));
+            System.out.println("사운드 변경");
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
