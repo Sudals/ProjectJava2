@@ -79,7 +79,7 @@ public class Game extends Thread{
         }
         int s1=0,s2=0,s3=0,s4=0,s5=0,s6=0;
         int i = 0;
-        int t=2500;
+        int t=500;
         while(beats.length-1!=i){
             //System.out.println(i);
             if(beats[i].time<=gameMusic.getTime()){
@@ -92,6 +92,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot1();
+                        s1=i;
                         break;
                     case "S":
                         if(i==0){
@@ -100,6 +101,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot2();
+                        s2=i;
                         break;
                     case "D":
                         if(i==0){
@@ -108,6 +110,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot3();
+                        s3=i;
                         break;
                     case "J":
                         if(i==0){
@@ -116,6 +119,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot4();
+                        s4=i;
                         break;
                     case "K":
                         if(i==0){
@@ -124,6 +128,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot5();
+                        s5=i;
                         break;
                     case "L":
                         if(i==0){
@@ -132,6 +137,7 @@ public class Game extends Thread{
                             break;
                         }
                         note = bc.slot6();
+                        s6=i;
                         break;
                 };
                 if(note !=null) {

@@ -11,15 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4a5827ab-a034-42f7-96fa-db4cf5a152d8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/BeatClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Games/src/BeatBox/KeyListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/BeatClass.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjectJava2/BeatBox/KeyListener.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
